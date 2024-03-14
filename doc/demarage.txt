@@ -1,0 +1,55 @@
+cd frontend
+npm run serve
+npm run build
+
+
+
+-- Créer un utilisateur pour la lecture
+CREATE USER 'lecture'@'localhost'  IDENTIFIED BY 'd7h7WbQ7UMb75k';
+
+-- Créer un utilisateur pour l'écriture
+CREATE USER 'ecriture'@'localhost' IDENTIFIED BY 'k77UQ5M7h7dWbb';
+
+
+-- Accorder le privilège SELECT sur la colonne id_utilisateur de la table appartement_temp
+GRANT SELECT (id_utilisateur) ON vb_gsb_2.appartement_temp TO 'ecriture'@'localhost';
+GRANT SELECT (id_utilisateur) ON vb_gsb_2.utilisateur TO 'ecriture'@'localhost';
+GRANT SELECT (id_utilisateur) ON vb_gsb_2.appartements TO 'ecriture'@'localhost';
+GRANT SELECT (numappart) ON vb_gsb_2.appartements TO 'ecriture'@'localhost';
+-- Attribuer les privilèges aux utilisateurs
+GRANT SELECT ON vb_gsb_2.* TO 'lecture'@'localhost';
+
+
+GRANT SELECT (num_dem) ON vb_gsb_2.demandes TO 'ecriture'@'localhost';
+GRANT DELETE ON vb_gsb_2.demandes TO 'ecriture'@'localhost';
+GRANT INSERT, UPDATE, DELETE ON vb_gsb_2.* TO 'ecriture'@'localhost';
+
+
+acronyme Table desmandes : 
+
+EA (En Attente) ++
+EE (En Examen) ??
+AP (Approuvée) ++ 
+RF (Refusée)
+EDS (En Attente de Documents Supplémentaires)
+EP (En Attente de Paiement)
+AN (Annulée)
+EX (Expirée) ++ 
+ECL (En Cours de Location) ++
+
+--Trigger : 
+
+DELIMITER //
+
+CREATE EVENT update_status_event
+ON SCHEDULE EVERY 1 DAY
+DO
+BEGIN
+    UPDATE demandes
+    SET status = 'ex'
+    WHERE dateArrivee < CURDATE();
+END //
+
+DELIMITER ;
+SET GLOBAL event_scheduler = ON;
+

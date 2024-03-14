@@ -1,0 +1,29 @@
+- frontend/
+  - src/
+    - assets/
+    - components/
+    - models/
+      - UserModel.js
+    - views/
+      - RegistrationView.vue
+    - controllers/
+      - RegistrationController.js
+    - App.vue
+    - main.js
+    - router.js
+
+- backend/
+  - models/
+  - controllers/
+  - routes/
+  - server.js
+  - ...
+
+- database/
+  - scripts/
+
+- assets/
+  - images/
+  - styles/       
+- assets/          
+- index.html

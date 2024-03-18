@@ -48,7 +48,7 @@ include('../controls/check_inactivity.php');
         <li>
             <span class="user" id="user" onclick="toggleUserMenu(event)">
                 <div class="relative">
-                    <span class="notification-absolute-menu "><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="person-circle-outline"></ion-icon>
+                    <span class="notification-absolute-menu"><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="person-circle-outline"></ion-icon>
                 </div>
             </span>
             <ul class="user-menu " id="userMenu">
@@ -63,7 +63,7 @@ include('../controls/check_inactivity.php');
                 <hr>
             </ul>
         </li>
-        <li class="show-on-mobile"><a class="menu"><span class="relative align-verticaly align-horizontaly"><span class="notification-absolute-menu "><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="menu-outline"></ion-icon></span></a></li>
+        <li class="show-on-mobile"><a class="menu"><span class="relative align-verticaly align-horizontaly"><span class="notification-absolute-menu"><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="menu-outline"></ion-icon></span></a></li>
     <?php endif; ?>
 </ul>
 </div>

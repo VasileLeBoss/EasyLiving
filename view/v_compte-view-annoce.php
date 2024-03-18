@@ -11,7 +11,7 @@ include('../controls/connected.php');
                 <div>
                 <span class="align-verticaly gap-10px">
                     <a href="v_compte-annonce.php" class="underline">Retour</a>
-                    <?php if (!$appartementAnnonce->getNombreDemandesAppartementById() > 0 ): ?>
+                    <?php if (!$appartementAnnonce->getNombreLocataireAppartementById() > 0 ): ?>
                     <form action="../controls/c_AppartementsUtilisateur.php" method="post">
                         
                         <input type="hidden" name="delete-annonce" value="<?php echo $appartementAnnonce->getNumappart() ?>">

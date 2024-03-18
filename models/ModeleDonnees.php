@@ -796,6 +796,24 @@ class ModeleDonnees
 		}
 	}
 
+	public function revenuUtilisateur($id_utilisateur)
+	{
+		try
+		{
+			$requete = "SELECT d.dateArrivee,d.dateDepart, a.prix_loc,a.prix_charg FROM demandes d JOIN appartements a ON d.numappart = a.numappart WHERE STATUS = 'ecl' AND id_proprieter = ?";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindValue(1, $id_utilisateur, PDO::PARAM_INT);
+			$ordre->execute();
+			$resultat = $ordre->fetchAll(PDO::FETCH_ASSOC);
+			$ordre->closeCursor();
+			return $resultat;
+			
+		}
+		catch (PDOException $e) {
+			error_log("Erreur lors de la recherche : " . $e->getMessage());
+			return false;
+		}
+	}
 
 }// fin classe
 ?>

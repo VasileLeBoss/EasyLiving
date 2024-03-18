@@ -126,6 +126,97 @@ class Utilisateur {
         $result = $monModele->getAllDemandesUtilisateur($this->getId());
         return $result;
     }
+
+    public function calculeRevenuUtilisateur()
+    {
+
+        require_once('../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $revenuUtilisateur = $result = $monModele->revenuUtilisateur($this->getId());
+        
+        $revenuTotal = 0;
+
+        foreach ($revenuUtilisateur as $revenu) {
+            
+            $dateArrivee = new DateTime($revenu['dateArrivee']);
+            $dateDepart = new DateTime($revenu['dateDepart']);
+            $nombreJours = $dateDepart->diff($dateArrivee)->days + 1;
+
+            
+            $revenuTotal += ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
+        }
+
+       
+        return $revenuTotal;
+
+
+    }
+    public function revenusParMoisUtilisateur()
+{
+    // Initialiser un tableau pour stocker les revenus par mois
+    $revenusParMois = [];
+
+    require_once('../models/ModeleDonnees.php');
+    $monModele = new ModeleDonnees('lecture');
+
+    $revenuUtilisateur = $monModele->revenuUtilisateur($this->getId());
+
+    // Parcourir les revenus de l'utilisateur
+    foreach ($revenuUtilisateur as $revenu) {
+        // Extraire le mois et l'année de la date d'arrivée
+        $moisAnnee = date('Y-m', strtotime($revenu['dateArrivee']));
+
+        // Calculer le revenu pour cet élément
+        $dateArrivee = new DateTime($revenu['dateArrivee']);
+        $dateDepart = new DateTime($revenu['dateDepart']);
+        $nombreJours = $dateDepart->diff($dateArrivee)->days + 1;
+        $revenuElement = ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
+
+        // Ajouter le revenu au mois correspondant dans le tableau
+        if (isset($revenusParMois[$moisAnnee])) {
+            $revenusParMois[$moisAnnee] += $revenuElement;
+        } else {
+            $revenusParMois[$moisAnnee] = $revenuElement;
+        }
+    }
+
+    // Retourner le tableau des revenus par mois
+    return $revenusParMois;
+}
+
+    public function calculeRevenuTotalMoisCourant()
+    {
+        $revenusParMois = $this->revenusParMoisUtilisateur();
+    
+        $moisAnneeCourant = date('Y-m');
+    
+        $revenuTotalMoisCourant = 0;
+    
+        foreach ($revenusParMois as $moisAnnee => $revenu) {
+            if ($moisAnnee === $moisAnneeCourant) {
+                $revenuTotalMoisCourant += $revenu;
+            }
+        }
+            
+        return $revenuTotalMoisCourant;
+    }
+    
+
+    public function formaterMoisAnnee($date)
+    {
+        $dateTime = new DateTime($date);
+    
+        $formatter = new IntlDateFormatter(
+            'fr_FR',
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::NONE,
+            null,
+            null,
+            'MMM'
+        );
+    
+        return $formatter->format($dateTime);
+    }
     
 }
 ?>

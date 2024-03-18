@@ -71,10 +71,17 @@
             </div>
 
             <div class="display-flex flex-column gap-10px align-verticaly">
+
                 <span class="small second-color">DÉCLINER</span>
-                <button id="decliner">
-                    <ion-icon class="rotate-icon" name="close-circle-outline"></ion-icon>
-                </button>
+                <form action="../controls/c_Demandes.php" method="post">
+                    <input
+                        type="hidden"
+                        name="annuler-demande-an"
+                        value="<?php echo $demande['num_dem'] ;?>">
+                    <button id="decliner">
+                        <ion-icon class="rotate-icon" name="close-circle-outline"></ion-icon>
+                    </button>
+                </form>
             </div>
 
         </div>

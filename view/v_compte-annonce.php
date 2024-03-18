@@ -24,7 +24,8 @@ include('../controls/connected.php');
 <?php endif; ?>
 
 <div class="min-conteiner">
-    <div class="full-width-white-padding-header align-verticaly space-between flex-wrap  gap-10px">
+    <div
+        class="full-width-white-padding-header align-verticaly space-between flex-wrap  gap-10px">
         <a href="v_compte-annonce.php">
             <h1>Mes annonces</h1>
         </a>
@@ -57,9 +58,9 @@ require_once('../controls/c_AppartementsUtilisateur.php');
         <?php if (empty($appartements)) :  echo $messageNoResult?>
     <?php else: ?>
         <?php foreach ($appartements as $appartement) : ?>
-        <div class="relative">
+        <div class="relative ">
             <a href="#" onclick="submitForm(<?php echo $appartement->getNumappart() ?>)">
-                <div class="box-grid-accueil-annonce">
+                <div class="box-grid-accueil-annonce no-hover-shadows">
                     <div class="img-annonce align-horizontaly">
                         <img src="../src/<?php echo $appartement->getTypappart() . '.png'; ?>" alt="">
                     </div>
@@ -91,53 +92,51 @@ require_once('../controls/c_AppartementsUtilisateur.php');
                     </form>
                 </div>
             </a>
-            
 
             <div class="notification-absolute-div">
 
-            <?php if ($appartement->getNombreLocataireAppartementById() > 0 ): ?>
-            <span
-                onclick="submitFormLocataire(<?php echo $appartement->getNumappart() ?>)"
-                class="button-demande align-horizontaly align-verticaly relative">
-                <ion-icon name="people-outline"></ion-icon>
-                <span class="notification-absolute"><?php echo $appartement->getNombreLocataireAppartementById();?></span>
+                <?php if ($appartement->getNombreLocataireAppartementById() > 0 ): ?>
+                <span
+                    onclick="submitFormLocataire(<?php echo $appartement->getNumappart() ?>)"
+                    class="button-demande align-horizontaly align-verticaly relative">
+                    <ion-icon name="people-outline"></ion-icon>
+                    <span class="notification-absolute"><?php echo $appartement->getNombreLocataireAppartementById();?></span>
 
-            </span>
+                </span>
 
-            <form
-                action=""
-                method="post"
-                id="formDemandeLocataire_<?php echo $appartement->getNumappart() ?>">
-                <input type="hidden" name="view-locataire" value="<?php echo $appartement->getNumappart() ?>">
-            </form>
+                <form
+                    action=""
+                    method="post"
+                    id="formDemandeLocataire_<?php echo $appartement->getNumappart() ?>">
+                    <input
+                        type="hidden"
+                        name="view-locataire"
+                        value="<?php echo $appartement->getNumappart() ?>">
+                </form>
 
+                <?php endif; ?>
 
-            <?php endif; ?> 
-            
-            <?php if ($appartement->getNombreDemandesAppartementById() > 0 ): ?>
-            <span
-                onclick="submitFormDemande(<?php echo $appartement->getNumappart() ?>)"
-                class="button-demande align-horizontaly align-verticaly relative">
-                <ion-icon name="folder-outline"></ion-icon>
-                <span class="notification-absolute"><?php echo $appartement->getNombreDemandesAppartementById();?></span>
-            </span>
+                <?php if ($appartement->getNombreDemandesAppartementById() > 0 ): ?>
+                <span
+                    onclick="submitFormDemande(<?php echo $appartement->getNumappart() ?>)"
+                    class="button-demande align-horizontaly align-verticaly relative">
+                    <ion-icon name="folder-outline"></ion-icon>
+                    <span class="notification-absolute"><?php echo $appartement->getNombreDemandesAppartementById();?></span>
+                </span>
 
+                <form
+                    action=""
+                    method="post"
+                    id="formDemande_<?php echo $appartement->getNumappart() ?>">
+                    <input
+                        type="hidden"
+                        name="view-demande"
+                        value="<?php echo $appartement->getNumappart() ?>">
+                </form>
 
-            <form
-                action=""
-                method="post"
-                id="formDemande_<?php echo $appartement->getNumappart() ?>">
-                <input type="hidden" name="view-demande" value="<?php echo $appartement->getNumappart() ?>">
-            </form>
-
-            <?php endif; ?> 
+                <?php endif; ?>
             </div>
 
-           
-            
-            
-
-            
         </div>
         <?php endforeach; ?>
 
@@ -157,12 +156,61 @@ require_once('../controls/c_AppartementsUtilisateur.php');
                     .getElementById('formDemandeLocataire_' + formId)
                     .submit();
             }
-        </script>
 
+            document.addEventListener("DOMContentLoaded", function () {
+                const notificationDivs = document.querySelectorAll(
+                    '.notification-absolute-div'
+                );
+                notificationDivs.forEach(function (div) {
+                    if (div.innerHTML.trim() === '') {
+                        div
+                            .classList
+                            .add('empty');
+                    }
+                });
+            });
+        </script>
         <?php endif; ?>
+    </div>
+</div>
+<?php if($appartement->getNombreLocataireAppartementById() > 0 ): ?>
+<div class="cotisation">
+    <div class="display-flex space-between">
+        <div>
+            <h2 class=" underline">Revenu</h2>
+        </div>
+        <div>
+            <h2><?php echo $_SESSION['utilisateur']->calculeRevenuUtilisateur()*0.93." €"; ?></h2>
+        </div>
+    </div>
+    <div class="display-flex">
+        <div>
+            <?php $revenuparmois = $_SESSION['utilisateur']->revenusParMoisUtilisateur(); ?>
+        </div>
+        <ul class="capitalize display-flex gap-24px flex-end">
+            <?php foreach($revenuparmois as $mois => $revenu) : ?>
+            <li
+                class="display-flex flex-column space-between align-verticaly revenu-li relative"
+                data-revenu="<?php echo $revenu; ?>">
+                <span class="small revenu-li"><?php echo $revenu*0.93.'€';?></span>
+                <span class="mois-li"><?php echo $_SESSION['utilisateur']->formaterMoisAnnee($mois);?></span>
+            </li>
+            <?php endforeach; ?>
+        </ul>
 
     </div>
 </div>
-<?php
-include('footer.php')
-?>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    
+        var revenuLiElements = document.querySelectorAll('.revenu-li');
+        revenuLiElements.forEach(function (liElement) {
+            var revenu = parseFloat(liElement.getAttribute('data-revenu'));
+            var hauteur = revenu * 0.07;
+            liElement.style.height = hauteur + 'px';
+        });
+    });
+</script>
+
+<?php endif;?>

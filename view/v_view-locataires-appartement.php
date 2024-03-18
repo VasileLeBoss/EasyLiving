@@ -13,8 +13,8 @@
     <?php foreach ($demandes as $demande) : ?>
 
     <?php 
-        $demandeur = new Utilisateur;
-        $demandeur = $demandeur->createUtilisateur($modele->getDemandeurById($demande['id_demandeur'])); 
+        $locataire = new Utilisateur;
+        $locataire = $locataire->createUtilisateur($modele->getDemandeurById($demande['id_demandeur'])); 
     ?>
     <div class="box-view-demandes display-flex flex-column gap-10px">
 
@@ -39,8 +39,8 @@
 
         <div class="display-flex gap-10px align-horizontaly">
             <div class="display-flex flex-column gap-10px align-verticaly">
-                <span class="small second-color">DEMANDEUR</span>
-                <?php echo $demandeur->getNomComplet() ;?>
+                <span class="small second-color">LOCATAIRE</span>
+                <?php echo $locataire->getNomComplet() ;?>
             </div>
         </div>
 
@@ -69,11 +69,11 @@
             <div class="display-flex flex-column gap-10px">
                 <div class="display-flex flex-column gap-5px">
                     <span class="small second-color">EMAIL</span>
-                    <?php echo $demandeur->getEmail() ;?>
+                    <?php echo $locataire->getEmail() ;?>
                 </div>
                 <div class="display-flex flex-column gap-5px">
                     <span class="small second-color">NUMÉRO TÉLÉPHONE</span>
-                    <?php echo $demandeur->getTel() ;?>
+                    <?php echo $locataire->getTel() ;?>
                 </div>
 
             </div>

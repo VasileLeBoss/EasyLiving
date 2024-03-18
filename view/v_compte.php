@@ -34,7 +34,7 @@ include('../controls/connected.php');
 
     </div>
     </a>
-    <a href="">
+    <a href="v_FAQ.php">
     <div class="box-compte">
         <div>
             <img src="../src/question.png" alt="">

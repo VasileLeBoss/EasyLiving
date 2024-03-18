@@ -44,6 +44,7 @@ if (isset($_SESSION['utilisateur'])) {
             } else {
                 $messageNoResult = "<h3 class='text-color-black'>Aucune annonce trouvée</h3>" ; 
             }
+            
         }
         if (isset($_POST['view-annonce'])) {
             

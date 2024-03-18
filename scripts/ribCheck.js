@@ -17,9 +17,9 @@
 
         function validateBanque() {
             const banque = banqueInput.value.trim();
-            const regex = /^[A-Za-z]+$/;
+            const regex = /^[A-Za-z\s]+$/;
         
-            const isValid = banque.length > 0 && regex.test(banque);
+            const isValid = regex.test(banque);
             return { isValid, message: isValid ? '' : 'Le champ est obligatoire' };
         }
         

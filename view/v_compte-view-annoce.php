@@ -11,10 +11,13 @@ include('../controls/connected.php');
                 <div>
                 <span class="align-verticaly gap-10px">
                     <a href="v_compte-annonce.php" class="underline">Retour</a>
+                    <?php if (!$appartementAnnonce->getNombreDemandesAppartementById() > 0 ): ?>
                     <form action="../controls/c_AppartementsUtilisateur.php" method="post">
+                        
                         <input type="hidden" name="delete-annonce" value="<?php echo $appartementAnnonce->getNumappart() ?>">
                         <input type="submit" class="underline supprimer" value="Supprimer">
                     </form>
+                    <?php endif; ?>
                 </span> 
                 </div>        
              </div>
@@ -79,22 +82,17 @@ include('../controls/connected.php');
                 <input type="text" class="capitalize" value="<?php echo $appartementAnnonce->getPreavis() == '1' ? 'oui' : 'non'; ?>" disabled>
                 </div>
             </div>
-
+            
             <div class="box-compte-information align-verticaly align-horizontaly" >
                 <input type="hidden" name="modif-annonce" >    
                 <input type="hidden" name="numappart" value="<?php echo $appartementAnnonce->getNumappart() ?>">
                 <button type="submit" id="submitbtn" disabled>Enregistrer</button>
             </div>
-
             </form>
-            
     </div>
 </div>
 <script src="../scripts/annonce-formCheck-prix.js"></script> 
-
-
-
-        
+   
 </div>
 </div>
     </div>

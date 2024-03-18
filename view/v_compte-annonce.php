@@ -91,14 +91,37 @@ require_once('../controls/c_AppartementsUtilisateur.php');
                     </form>
                 </div>
             </a>
-            <?php if ($appartement->getNombreDemandesAppartementById() > 0 ): ?>
+            
 
+            <div class="notification-absolute-div">
+
+            <?php if ($appartement->getNombreLocataireAppartementById() > 0 ): ?>
+            <span
+                onclick="submitFormLocataire(<?php echo $appartement->getNumappart() ?>)"
+                class="button-demande align-horizontaly align-verticaly relative">
+                <ion-icon name="people-outline"></ion-icon>
+                <span class="notification-absolute"><?php echo $appartement->getNombreLocataireAppartementById();?></span>
+
+            </span>
+
+            <form
+                action=""
+                method="post"
+                id="formDemandeLocataire_<?php echo $appartement->getNumappart() ?>">
+                <input type="hidden" name="view-locataire" value="<?php echo $appartement->getNumappart() ?>">
+            </form>
+
+
+            <?php endif; ?> 
+            
+            <?php if ($appartement->getNombreDemandesAppartementById() > 0 ): ?>
             <span
                 onclick="submitFormDemande(<?php echo $appartement->getNumappart() ?>)"
-                class="button-demande align-horizontaly align-verticaly">
+                class="button-demande align-horizontaly align-verticaly relative">
                 <ion-icon name="folder-outline"></ion-icon>
                 <span class="notification-absolute"><?php echo $appartement->getNombreDemandesAppartementById();?></span>
             </span>
+
 
             <form
                 action=""
@@ -107,7 +130,14 @@ require_once('../controls/c_AppartementsUtilisateur.php');
                 <input type="hidden" name="view-demande" value="<?php echo $appartement->getNumappart() ?>">
             </form>
 
-            <?php endif; ?>
+            <?php endif; ?> 
+            </div>
+
+           
+            
+            
+
+            
         </div>
         <?php endforeach; ?>
 
@@ -120,6 +150,11 @@ require_once('../controls/c_AppartementsUtilisateur.php');
             function submitFormDemande(formId) {
                 document
                     .getElementById('formDemande_' + formId)
+                    .submit();
+            }
+            function submitFormLocataire(formId) {
+                document
+                    .getElementById('formDemandeLocataire_' + formId)
                     .submit();
             }
         </script>

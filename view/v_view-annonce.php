@@ -175,7 +175,7 @@ include("header.php");
                                             <span class="small">ARRIVÉE</span>
                                             <input
                                                 type="date"
-                                                id="dateArrivee"
+                                                id="dateArrivee datepicker"
                                                 min="<?php echo $appartementAnnonce->getDateLibreAjour(); ?>"
                                                 name="dateArrivee"
                                                 value="<?php echo $appartementAnnonce->getDateLibreAjour(); ?>"
@@ -299,7 +299,6 @@ include("header.php");
                             </div>
                             <p class="small text-align-center" style="margin-top:12px;">Aucun montant ne vous sera débité pour le moment
                             </p>
-
                         </div>
                         <table class="table_reservation">
                             <tr>
@@ -466,88 +465,133 @@ scrollContent.scrollLeft += delta * scrollSpeed;
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-// Récupérer les éléments HTML nécessaires
-var nuitsSpan = document.getElementById("nuittotal");
-var chargesSpan = document.getElementById("charges");
-var prixNuitsTotalSpan = document.getElementById("prixnuittotal");
-var fraisSpan = document.getElementById("frais");
-var prixTotalSpan = document.getElementById("prixtotal");
-var dateArriveeInput = document.getElementById("dateArrivee");
-var dateDepartInput = document.getElementById("dateDepart");
+    // Récupérer les éléments HTML nécessaires
+    var nuitsSpan = document.getElementById("nuittotal");
+    var chargesSpan = document.getElementById("charges");
+    var prixNuitsTotalSpan = document.getElementById("prixnuittotal");
+    var fraisSpan = document.getElementById("frais");
+    var prixTotalSpan = document.getElementById("prixtotal");
+    var dateArriveeInput = document.getElementById("dateArrivee");
+    var dateDepartInput = document.getElementById("dateDepart");
 
-// Fonction pour calculer le nombre de nuits entre deux dates
-function calculerNombreNuits(dateArrivee, dateDepart) {
-var diff = new Date(dateDepart) - new Date(dateArrivee);
-return Math.ceil(diff / (1000 * 60 * 60 * 24));
-}
+    // Fonction pour calculer le nombre de nuits entre deux dates
+    function calculerNombreNuits(dateArrivee, dateDepart) {
+        var diff = new Date(dateDepart) - new Date(dateArrivee);
+        return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    }
 
-// Fonction pour mettre à jour les résultats
-function mettreAJourResultats() {
-// Vérifier si les champs d'entrée sont vides
-if (dateArriveeInput.value == '' || dateDepartInput.value == '') {
-// Si l'un des champs est vide, les résultats seront vides
-nuitsSpan.textContent = '0';
-prixNuitsTotalSpan.textContent = '0€';
-fraisSpan.textContent = '0€';
-prixTotalSpan.textContent = '0€';
-chargesSpan.textContent = '0€';
-return;
-}
-var nuits = Math.max(
-calculerNombreNuits(dateArriveeInput.value, dateDepartInput.value),
-0
-);
-var prixNuitsTotal = nuits * <?php echo $appartementAnnonce->getPrixTotal(); ?>;
-var prixChargeTotal = nuits * <?php echo $appartementAnnonce->getPrixCharg(); ?>;
-var frais = (prixNuitsTotal * 0.07).toFixed(2);
-var prixTotal = prixNuitsTotal;
+    // Fonction pour mettre à jour les résultats
+    function mettreAJourResultats() {
+        // Vérifier si les champs d'entrée sont vides
+        if (dateArriveeInput.value == '' || dateDepartInput.value == '') {
+            // Si l'un des champs est vide, les résultats seront vides
+            nuitsSpan.textContent = '0';
+            prixNuitsTotalSpan.textContent = '0€';
+            fraisSpan.textContent = '0€';
+            prixTotalSpan.textContent = '0€';
+            chargesSpan.textContent = '0€';
+            return;
+        }
+        var nuits = Math.max(
+            calculerNombreNuits(dateArriveeInput.value, dateDepartInput.value),
+            0
+        );
+        var prixNuitsTotal = nuits * <?php echo $appartementAnnonce->getPrixTotal(); ?>;
+        var prixChargeTotal = nuits * <?php echo $appartementAnnonce->getPrixCharg(); ?>;
+        var frais = (prixNuitsTotal * 0.07).toFixed(2);
+        var prixTotal = prixNuitsTotal;
 
-// Mettre à jour les éléments HTML
-nuitsSpan.textContent = nuits;
-prixNuitsTotalSpan.textContent = prixNuitsTotal + "€";
-fraisSpan.textContent = frais + "€";
-prixTotalSpan.textContent = prixTotal + "€";
-chargesSpan.textContent = prixChargeTotal + "€";
-}
+        // Mettre à jour les éléments HTML
+        nuitsSpan.textContent = nuits;
+        prixNuitsTotalSpan.textContent = prixNuitsTotal + "€";
+        fraisSpan.textContent = frais + "€";
+        prixTotalSpan.textContent = prixTotal + "€";
+        chargesSpan.textContent = prixChargeTotal + "€";
+    }
 
-// Ajouter des écouteurs d'événements pour mettre à jour les résultats lors de
-// la modification des dates
-dateArriveeInput.addEventListener("input", mettreAJourResultats);
-dateDepartInput.addEventListener("input", mettreAJourResultats);
+    // Ajouter des écouteurs d'événements pour mettre à jour les résultats lors de
+    // la modification des dates
+    dateArriveeInput.addEventListener("input", mettreAJourResultats);
+    dateDepartInput.addEventListener("input", mettreAJourResultats);
 
-// Appeler la fonction une fois au chargement de la page
-mettreAJourResultats();
+    // Sélectionnez les éléments d'entrée de date
+    var dateArriveeInput = document.getElementById('dateArrivee');
+    var dateDepartInput = document.getElementById('dateDepart');
+
+    // Ajoutez un écouteur d'événements à la date d'arrivée
+    dateArriveeInput.addEventListener('change', function () {
+        // Récupérez la date d'arrivée sélectionnée
+        var dateArrivee = new Date(dateArriveeInput.value);
+
+        // Récupérez la valeur du préavis
+        var preavis = <?php echo $appartementAnnonce->getPreavis(); ?>;
+
+        // Ajoutez le nombre approprié de jours à la date d'arrivée pour obtenir la date
+        // de départ minimale
+        dateArrivee.setDate(dateArrivee.getDate() + (
+            preavis === 1
+            ? 7
+            : 2
+        ));
+
+        // Mettez à jour la valeur minimale de la date de départ
+        dateDepartInput.min = dateArrivee
+            .toISOString()
+            .split('T')[0];
+
+        // Réinitialisez la valeur de la date de départ à la nouvelle valeur minimale
+        dateDepartInput.value = "";
+    });
+
+    // Appeler la fonction une fois au chargement de la page
+    mettreAJourResultats();
+
 });
+
 </script>
+
+
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-// Sélectionnez les éléments d'entrée de date
-var dateArriveeInput = document.getElementById('dateArrivee');
-var dateDepartInput = document.getElementById('dateDepart');
+document.addEventListener("DOMContentLoaded", function () {
+    // Récupérer les dates déjà réservées
+    var reservedDateRanges = <?php echo json_encode($appartementAnnonce->datesDejaReservee($appartementAnnonce->getNumappart())); ?>;
+    
+    // Fonction pour désactiver les plages de dates déjà réservées dans l'input de type "date"
+    function disableReservedDateRanges() {
+        const dateArriveeInput = document.getElementById('dateArrivee');
+        const dateDepartInput = document.getElementById('dateDepart');
 
-// Ajoutez un écouteur d'événements à la date d'arrivée
-dateArriveeInput.addEventListener('change', function () {
-// Récupérez la date d'arrivée sélectionnée
-var dateArrivee = new Date(dateArriveeInput.value);
+        dateArriveeInput.addEventListener('input', function() {
+            const selectedDate = new Date(this.value);
+            for (const range of reservedDateRanges) {
+                const startDate = new Date(range.dateArrivee);
+                const endDate = new Date(range.dateDepart);
+                if (selectedDate >= startDate && selectedDate <= endDate) {
+                    alert('Cette date est déjà réservée. Veuillez choisir une autre date.');
+                    this.value = ''; // Effacer la date sélectionnée
+                    return;
+                }
+            }
+        });
 
-// Récupérez la valeur du préavis
-var preavis = <?php echo $appartementAnnonce->getPreavis(); ?>;
+        dateDepartInput.addEventListener('input', function() {
+            const selectedDate = new Date(this.value);
+            for (const range of reservedDateRanges) {
+                const startDate = new Date(range.dateArrivee);
+                const endDate = new Date(range.dateDepart);
+                if (selectedDate >= startDate && selectedDate <= endDate) {
+                    alert('Cette date est déjà réservée. Veuillez choisir une autre date.');
+                    this.value = ''; // Effacer la date sélectionnée
+                    return;
+                }
+            }
+        });
+    }
 
-// Ajoutez le nombre approprié de jours à la date d'arrivée pour obtenir la date
-// de départ minimale
-dateArrivee.setDate(dateArrivee.getDate() + (
-preavis === 1
-    ? 7
-    : 2
-));
-
-// Mettez à jour la valeur minimale de la date de départ
-dateDepartInput.min = dateArrivee
-.toISOString()
-.split('T')[0];
-
-// Réinitialisez la valeur de la date de départ à la nouvelle valeur minimale
-dateDepartInput.value = "";
+    // Appeler la fonction pour désactiver les plages de dates déjà réservées
+    disableReservedDateRanges();
 });
-});
+
+
 </script>

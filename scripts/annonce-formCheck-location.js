@@ -10,8 +10,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fonction de validation de la rue
     function validateRue(rue) {
-        return /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/.test(rue);        
+        // Vérifie si la rue contient uniquement des lettres, espaces, apostrophes et tirets,
+        // et si sa longueur est inférieure ou égale à 200 caractères
+        return /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]{1,50}$/.test(rue);
     }
+    
 
     // Fonction de validation de l'arrondissement
     function validateArrondissement(arrondissement) {
@@ -20,8 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fonction de validation de l'étage
     function validateEtage(etage) {
-        return parseFloat(etage) >= 0;
+        return /^(0|[1-9]\d{0,2})$/.test(etage);
     }
+    
+    
+    
+    
+    
 
     // Fonction pour vérifier la validité globale du formulaire
     function checkFormValidity() {

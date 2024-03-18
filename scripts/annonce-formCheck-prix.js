@@ -8,9 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fonction de validation du prix
     function validatePrix(prix) {
-        // Utilisation d'une expression régulière pour autoriser les nombres décimaux
-        return /^\d*\.?\d*$/.test(prix) && parseFloat(prix) >= 0;
+
+        return /^\d{1,6}(\.\d{1,2})?$/.test(prix) && parseFloat(prix) >= 0;
     }
+    
 
     // Fonction pour gérer l'événement d'entrée
     function handleInput(event) {

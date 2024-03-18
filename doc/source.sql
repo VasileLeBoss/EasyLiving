@@ -55,20 +55,21 @@ CREATE TABLE appartement_temp(
    FOREIGN KEY(id_utilisateur) REFERENCES proprietaire(id_utilisateur)
 );
 
-
 CREATE TABLE locataires(
-   numeroloc INT,
-   nom_loc VARCHAR(30) NOT NULL,
-   prenom_loc VARCHAR(20) NOT NULL,
-   datenaiss DATE NOT NULL,
-   tel_loc VARCHAR(20),
-   r_i_b INT NOT NULL,
-   tel_banque VARCHAR(20),
-   numappart INT NOT NULL,
-   PRIMARY KEY(numeroloc),
-   UNIQUE(numappart),
-   FOREIGN KEY(numappart) REFERENCES appartement(numappart)
-);
+		numeroloc INT auto_increment,
+		nom_loc VARCHAR(30) NOT NULL,
+		prenom_loc VARCHAR(20) NOT NULL,
+		datenaiss DATE NOT NULL,
+		tel_loc VARCHAR(20),
+		num_cpte_banque varchar(11) NOT NULL,
+		banque varchar(255),
+		adress_banque varchar(255),
+		code_ville_banque varchar(5),
+		tel_banque VARCHAR(20),
+		numappart INT NOT NULL,
+		PRIMARY KEY(numeroloc),
+		FOREIGN KEY(numappart) REFERENCES appartements(numappart)
+	 );
 
 CREATE TABLE client(
    id_utilisateur INT,

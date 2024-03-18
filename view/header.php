@@ -33,7 +33,7 @@ include('../controls/check_inactivity.php');
 </div>
 <div>
 <ul class="nav-list end">
-<li><a class="user " href="v_depot-annonce.php"><button class="demande-log"><span class="aligne-icon"><ion-icon name="bed-outline"></ion-icon>Demander un logement</span></button></a></li>
+<!-- <li><a class="user " href="v_depot-annonce.php"><button class="demande-log"><span class="aligne-icon"><ion-icon name="bed-outline"></ion-icon>Demander un logement</span></button></a></li> -->
 
 <li><a class="user" href="v_depot-annonce.php"><button class="add-annonce"><span class="aligne-icon"><ion-icon name="add-outline"></ion-icon>Déposer une annonce</span></button></a></li>
 
@@ -48,7 +48,7 @@ include('../controls/check_inactivity.php');
         <li>
             <span class="user" id="user" onclick="toggleUserMenu(event)">
                 <div class="relative">
-                    <span class="notification-absolute "><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="person-circle-outline"></ion-icon>
+                    <span class="notification-absolute-menu "><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="person-circle-outline"></ion-icon>
                 </div>
             </span>
             <ul class="user-menu " id="userMenu">
@@ -63,7 +63,7 @@ include('../controls/check_inactivity.php');
                 <hr>
             </ul>
         </li>
-        <li class="show-on-mobile"><a class="menu"><span class="relative align-verticaly align-horizontaly"><span class="notification-absolute "><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="menu-outline"></ion-icon></span></a></li>
+        <li class="show-on-mobile"><a class="menu"><span class="relative align-verticaly align-horizontaly"><span class="notification-absolute-menu "><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="menu-outline"></ion-icon></span></a></li>
     <?php endif; ?>
 </ul>
 </div>
@@ -71,7 +71,7 @@ include('../controls/check_inactivity.php');
 <ul class="menu-items">
     <?php  if (!Utilisateur::estConnecte()) : ?>
         <hr>
-        <a href="v_depot-annonce.php"><li><span class="aligne-icon"><ion-icon name="bed-outline"></ion-icon>Demander un logement</span></li></a>
+        <!-- <a href="v_depot-annonce.php"><li><span class="aligne-icon"><ion-icon name="bed-outline"></ion-icon>Demander un logement</span></li></a> -->
 
         <a href="v_depot-annonce.php"><li><span class="aligne-icon"><ion-icon name="add-outline"></ion-icon>Déposer une annonce</span></li></a>
         <hr>
@@ -82,7 +82,7 @@ include('../controls/check_inactivity.php');
                 <a href="v_compte.php"><li ><span class="aligne-icon" ><ion-icon name="person-outline"></ion-icon>Compte</span></li></a>
                 <hr>
                 <a href="v_view-voyage.php"><li><span class="aligne-icon"><ion-icon name="paper-plane-outline"></ion-icon>Voyages</span></li></a>
-                <a href="v_compte-annonce.php"><li><span class="aligne-icon relative"><ion-icon name="grid-outline"></ion-icon>Gérer mes annonces<span class="notification-absolute notification-absolute-mobile"><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span></span></li></a>
+                <a href="v_compte-annonce.php"><li><span class="aligne-icon relative"><ion-icon name="grid-outline"></ion-icon>Gérer mes annonces<span class="notification-absolute-menu notification-absolute-mobile"><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span></span></li></a>
                 <a href="v_depot-annonce.php"><li><span class="aligne-icon"><ion-icon name="add-outline"></ion-icon>Déposer une annonce</span></li></a>
                 <hr>
                 <a href="../controls/deconnexion.php"><li><span class="aligne-icon"><ion-icon name="log-out-outline"></ion-icon>Se déconnecter</span></li></a>

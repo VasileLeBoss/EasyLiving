@@ -1370,23 +1370,6 @@ table.table_annonce tr td:nth-child(2) ,.table_confirmation tr td:nth-child(2), 
     margin: 0;
     padding: 0;
 }
- .button-demande
-{
-    position: absolute;
-    right: -15px;
-    bottom: -15px;
-    z-index: 9;
-    box-sizing: border-box;
-    padding: 15px;
-cursor: pointer;
-    display: flex;
-    align-items: center;
-    font-size: 2rem;
-    border-radius: 50%;
-    border: 10px solid var(--main-backgraund-color);
-    transition: var(--transition-time);
-    background-color: var(--second-backgraund-color);
-}
 .grid-view-demandes
 {
     display: grid;
@@ -1799,11 +1782,71 @@ filter: var(--filter-image);
     grid-template-columns: repeat(2, 1fr);  
     gap: 24px;
 }
+.notification-absolute-div
+{
+
+    display: flex;
+    background-color: var(--main-backgraund-color);
+    position: absolute;
+    right: -10px;
+    z-index: 9;
+    border-radius: 35px;
+    bottom: -5px;
+    padding: 5px;
+    gap: 5px;
+}
+
+.button-demande
+{
+
+    z-index: 9;
+    box-sizing: border-box;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    border-radius: 50%;
+    /* border: 10px solid var(--main-backgraund-color); */
+    transition: var(--transition-time);
+    background-color: var(--second-backgraund-color);
+}
+.button-locataire
+{
+    z-index: 9;
+    box-sizing: border-box;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    border-radius: 50%;
+    /* border: 10px solid var(--main-backgraund-color); */
+    transition: var(--transition-time);
+    background-color: var(--second-backgraund-color);
+}
 .notification-absolute:empty,.notification-relative:empty
 {
     display: none;
 }
 .notification-absolute
+{
+    position: absolute;
+    background-color: var(--red-erreur);
+    z-index: 3;
+    font-size: 0.7rem;
+    box-sizing: border-box;
+    padding: 2px 4px;
+    display: flex;
+    color: var(--text-color-white);
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    border-radius: 50%;
+    right: 10px;
+    top: 10px;
+}
+.notification-absolute-menu
 {
     position: absolute;
     background-color: var(--red-erreur);

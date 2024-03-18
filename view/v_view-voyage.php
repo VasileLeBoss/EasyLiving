@@ -12,36 +12,8 @@
 
         <?php if (!empty($mesDemandes)) : ?>
         <h2 class='no-mar-pad second-color'>Mes demandes</h2>
-
-        <?php foreach ($mesDemandes as $demande) : ?>
-
-        <?php 
-               
-
-                switch ($demande['status']) {
-                    case 'ea':
-                        $ea[] = $demande;  
-                        break;
-                    case 'ex':
-                            $ex[] = $demande;  
-                            break;
-                    case 'an':
-                        $an[] = $demande;  
-                            break;
-                    case 'ap':
-                        $ap[] = $demande;  
-                            break;
-                    case 'ecl':
-                                $ecl[] = $demande;  
-                                    break;
-                    default:
-
-                        break;
-                }    
-            ?>
-        <?php endforeach; ?>
         <?php if(!empty($ecl)):?>
-        <h3 class='no-mar-pad text-color-black underline'>Mes prochains voyages</h3>
+        <h3 class='no-mar-pad text-color-black underline'>Mes réservations</h3>
         <?php endif; ?>
         <?php foreach ($ecl as $demande) : ?>
         <div class="box-view-demandes display-flex flex-column gap-24px">
@@ -77,7 +49,6 @@
                 </div>
             </div>
             <div class="display-flex gap-10px align-horizontaly">
-                
             </div>
 
             <div class="display-flex gap-10px align-horizontaly">
@@ -148,7 +119,7 @@
             </div>
         </div>
 
-    <?php endforeach; ?>
+<?php endforeach; ?>
         <?php if(!empty($ap)):?>
         <h3 class='no-mar-pad text-color-black underline'>Approuvée et en attente de paiement</h3>
         <?php endif; ?>
@@ -339,6 +310,7 @@
                                         type="hidden"
                                         name="reserver-logement-rib"
                                         value="<?php echo $demande['numappart']; ?>">
+                                    <input type="hidden" name="dateDepart" value="<?php echo $demande['dateDepart'] ;?>">
                                     <button class="width-100" id="submitBtn" disabled="disabled">Réserver le logement</button>
                                 </div>
                             </div>
@@ -532,6 +504,10 @@
                             type="hidden"
                             name="supprimer-demande"
                             value="<?php echo $demande['num_dem'] ?>">
+                        <input
+                            type="hidden"
+                            name="location"
+                            value="voyage">
                         <button type="submit" id="decliner">
                             <ion-icon name="trash-outline"></ion-icon>
                         </button>
@@ -604,6 +580,10 @@
                             type="hidden"
                             name="supprimer-demande"
                             value="<?php echo $demande['num_dem'] ?>">
+                            <input
+                            type="hidden"
+                            name="location"
+                            value="voyage">
                         <button type="submit" id="decliner">
                             <ion-icon name="trash-outline"></ion-icon>
                         </button>

@@ -206,6 +206,13 @@ class Appartement {
         $result = $monModele->getNombreDemandesAppartementById($this->getNumappart());
         return $result;
     }
+    public function getNombreLocataireAppartementById()
+    {
+        require_once('../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $result = $monModele->getNombreLocataireAppartementById($this->getNumappart());
+        return $result;
+    }
 
     function createAppartementFromAnnonce($annonce) {
         if (!empty($annonce)) {
@@ -269,8 +276,13 @@ class Appartement {
         return $gagneReel;
     }
 
-
-
+    function datesDejaReservee($numappart)
+    {
+        require_once('../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $result = $monModele->restrictedDateRangesFromDatabase($numappart);
+        return $result;
+    }
 
 }
 

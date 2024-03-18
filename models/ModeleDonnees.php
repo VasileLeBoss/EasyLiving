@@ -506,7 +506,7 @@ class ModeleDonnees
 	{
 		try
 		{
-			$requete = "SELECT COUNT(*) AS count FROM demandes WHERE numappart = ? AND id_demandeur = ?;";
+			$requete = "SELECT COUNT(*) AS count FROM demandes WHERE numappart = ? AND id_demandeur = ? ;";
 			$ordre = $this->monPDOstatique->prepare($requete);
 			$ordre->bindValue(1, $numappart, PDO::PARAM_INT);
 			$ordre->bindValue(2, $id_utilisateur, PDO::PARAM_INT);
@@ -526,7 +526,7 @@ class ModeleDonnees
 	{
 		try
 		{
-			$requete = "SELECT COUNT(*) AS count FROM demandes WHERE id_proprieter = ?";
+			$requete = "SELECT COUNT(*) AS count FROM demandes WHERE id_proprieter = ?  and status != 'ecl' ;";
 			$ordre = $this->monPDOstatique->prepare($requete);
 			$ordre->bindValue(1, $id_proprieter, PDO::PARAM_INT);
 			$ordre->execute();
@@ -547,7 +547,7 @@ class ModeleDonnees
 	{
 		try
 		{
-			$requete = "SELECT COUNT(*) as count FROM demandes WHERE numappart = ?";
+			$requete = "SELECT COUNT(*) as count FROM demandes WHERE numappart = ? and status != 'ecl' ";
 			$ordre = $this->monPDOstatique->prepare($requete);
 			$ordre->bindValue(1, $id_appartement, PDO::PARAM_INT);
 			$ordre->execute();
@@ -564,6 +564,29 @@ class ModeleDonnees
 		}
 	}
 	
+
+	public function getNombreLocataireAppartementById($id_appartement)
+	{
+		try
+		{
+			$requete = "SELECT COUNT(*) as count FROM demandes WHERE numappart = ? and status = 'ecl' ";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindValue(1, $id_appartement, PDO::PARAM_INT);
+			$ordre->execute();
+			$resultat = $ordre->fetch(PDO::FETCH_ASSOC);
+			$ordre->closeCursor();
+			if ($resultat['count']>0) {
+				return $resultat['count'];
+			}
+			
+		}
+		catch (PDOException $e) {
+			error_log("Erreur lors de la recherche : " . $e->getMessage());
+			return false;
+		}
+	}
+
+
 	public function getAllDemandesAppartementById($id_appartement)
 	{
 		try
@@ -582,6 +605,29 @@ class ModeleDonnees
 			return false;
 		}
 	}
+
+	public function getAllLocatairesAppartementById($id_appartement)
+	{
+		try
+		{
+			$requete = "SELECT * FROM demandes WHERE numappart = ? and status ='ecl' order by dateArrivee ";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindValue(1, $id_appartement, PDO::PARAM_INT);
+			$ordre->execute();
+			$resultat = $ordre->fetchAll(PDO::FETCH_ASSOC);
+			$ordre->closeCursor();
+			return $resultat;
+			
+		}
+		catch (PDOException $e) {
+			error_log("Erreur lors de la recherche : " . $e->getMessage());
+			return false;
+		}
+	}
+
+
+
+
 	
 	public function getDemandeurById($id_demandeur)
 	{
@@ -676,6 +722,10 @@ class ModeleDonnees
 		}
 	}	
 	
+
+	
+
+
 	public function InsertNewLocater($nom_loc, $prenom_loc, $tel_loc, $num_cpte_banque, $banque, $adress_banque, $code_ville_banque, $tel_banque, $numappart)
 	{
 		try {
@@ -708,6 +758,44 @@ class ModeleDonnees
 			die("Erreur lors de l'insertion de l'utilisateur : " . $e->getMessage());
 		}
 	}
+
+	public function UpdateDateDisponibleAppartement($num_app,$date_libre) {
+		try {
+			$requete = "UPDATE appartements set date_libre = ? WHERE numappart = ?";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindValue(1, $date_libre, PDO::PARAM_STR);
+			$ordre->bindValue(2, $num_app, PDO::PARAM_INT);
 	
+			$resultat = $ordre->execute();
+	
+			return $resultat;    
+		} catch (PDOException $e) {
+			error_log("Erreur PDO lors de la suppression de la demande : " . $e->getMessage());
+			return false;
+		}
+	}	
+
+
+
+	public function restrictedDateRangesFromDatabase($numappart)
+	{
+		try
+		{
+			$requete = "SELECT dateArrivee,dateDepart FROM demandes WHERE numappart = ?";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindValue(1, $numappart, PDO::PARAM_INT);
+			$ordre->execute();
+			$resultat = $ordre->fetchAll(PDO::FETCH_ASSOC);
+			$ordre->closeCursor();
+			return $resultat;
+			
+		}
+		catch (PDOException $e) {
+			error_log("Erreur lors de la recherche : " . $e->getMessage());
+			return false;
+		}
+	}
+
+
 }// fin classe
 ?>

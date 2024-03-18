@@ -33,7 +33,7 @@ AP (Approuvée) ++
 RF (Refusée)
 EDS (En Attente de Documents Supplémentaires)
 EP (En Attente de Paiement)
-AN (Annulée)
+AN (Annulée) ++
 EX (Expirée) ++ 
 ECL (En Cours de Location) ++
 

@@ -73,17 +73,53 @@ if (isset($_SESSION['utilisateur'])) {
 
             include_once("v_compte-view-annoce.php");
             exit;
-        
         }
 
         if (isset($_POST["view-demande"])) {
+            
             $idAnnonce = $_POST['view-demande'];
             $resultat = $modele->getAnnoncebyID($idAnnonce);
             $appartementAnnonce = new Appartement ;
             $appartementAnnonce = $appartementAnnonce->createAppartementFromAnnonce($resultat);
             $demandes = $modele->getAllDemandesAppartementById($idAnnonce);
             
+            $ea = []; 
+            $ex = [];
+            $an = [];  
+            $ap = [];  
+            $ecl = [];
+               
+            foreach ($demandes as $demande) 
+            {
+                switch ($demande['status']) {
+                    case 'ea': $ea[] = $demande;
+                    break;
+                    case 'ex': $ex[] = $demande;
+                    break;
+                    case 'an': $an[] = $demande;
+                    break;
+                    case 'ap': $ap[] = $demande;
+                    break;
+                    case 'ecl': $ecl[] = $demande;
+                    break;
+                    default: break;
+                }
+            }
+
+
             include('v_view-demande.php');
+            exit;
+          }
+          if (isset($_POST['view-locataire'])) {
+            
+            $idAnnonce = $_POST['view-locataire'];
+            $resultat = $modele->getAnnoncebyID($idAnnonce);
+            $appartementAnnonce = new Appartement ;
+            $appartementAnnonce = $appartementAnnonce->createAppartementFromAnnonce($resultat);
+
+            $demandes = $modele->getAllLocatairesAppartementById($idAnnonce);
+            
+            include('v_view-locataires-appartement.php');
             exit;
           }
 

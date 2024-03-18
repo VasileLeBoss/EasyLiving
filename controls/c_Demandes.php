@@ -16,7 +16,19 @@ if (isset($_SESSION['utilisateur'])) {
 
             $id = intval($_POST['supprimer-demande']);
             $modele->DeleteDemandeById($id);
-            header("Location: ../view/v_view-voyage.php");
+
+            switch ($_POST["location"]) {
+                case 'demande':
+                    header("Location: ../view/v_compte-annonce.php");
+                    break;
+                case 'voyage':
+                        header("Location: ../view/v_view-voyage.php");
+                        break;
+                default:
+                header("Location: ../view/v_erreur.php");
+                break;
+            }
+           
             exit;
         }
         if (isset($_POST['annuler-demande-an'])) {
@@ -24,6 +36,8 @@ if (isset($_SESSION['utilisateur'])) {
 
             $id = intval($_POST['annuler-demande-an']);
             $modele->UpdateStatusDemandeById($id,'an');
+
+
             header("Location: ../view/v_view-voyage.php");
             exit;
         }
@@ -48,11 +62,12 @@ if (isset($_SESSION['utilisateur'])) {
             $nom = $_SESSION['utilisateur']->getNom();
             $prenom = $_SESSION['utilisateur']->getPrenom();
             $tel = $_SESSION['utilisateur']->getTel();
+            $date_libre = $_POST['dateDepart'];
             
-            echo $num_dem;
              $result = $modele->InsertNewLocater($nom, $prenom,$tel , $num_cpte_banque, $banque, $adress_banque, $code_ville_banque, $tel_banque, $numappart);
              if ($result > 0)  {
                  $modele->UpdateStatusDemandeById($num_dem,'ecl');
+                 $modele->UpdateDateDisponibleAppartement($numappart,$date_libre);
                  header('Location: ../view/v_view-voyage.php');
                  exit;
              }
@@ -73,7 +88,23 @@ if (isset($_SESSION['utilisateur'])) {
         $ecl = [];
         $mesDemandes = $_SESSION['utilisateur']->getAllDemandesUtilisateur();
         
-        
+        foreach ($mesDemandes as $demande) 
+        {
+            switch ($demande['status']) {
+                case 'ea': $ea[] = $demande;
+                break;
+                case 'ex': $ex[] = $demande;
+                break;
+                case 'an': $an[] = $demande;
+                break;
+                case 'ap': $ap[] = $demande;
+                break;
+                case 'ecl': $ecl[] = $demande;
+                break;
+                default: break;
+            }
+        }
+
     }
 
 }

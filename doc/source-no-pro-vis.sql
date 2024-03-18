@@ -60,7 +60,7 @@ CREATE TABLE locataires(
    tel_banque VARCHAR(20),
    numappart INT NOT NULL,
    PRIMARY KEY(numeroloc),
-   UNIQUE(numappart),
+
    FOREIGN KEY(numappart) REFERENCES appartements(numappart)
 );
 
@@ -75,23 +75,6 @@ CREATE TABLE demandes(
    FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur)
 );
 
-
-CREATE TABLE visiter(
-   numappart INT,
-   id_utilisateur INT,
-   date_visite DATE,
-   PRIMARY KEY(numappart, id_utilisateur),
-   FOREIGN KEY(numappart) REFERENCES appartements(numappart),
-   FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur)
-);
-
-CREATE TABLE concerner(
-   num_dem INT,
-   arrondiss_dem INT,
-   PRIMARY KEY(num_dem, arrondiss_dem),
-   FOREIGN KEY(num_dem) REFERENCES demandes(num_dem),
-   FOREIGN KEY(arrondiss_dem) REFERENCES arrondissement(arrondiss_dem)
-);
 
 DELIMITER //
 CREATE PROCEDURE createtempappartement(IN utilisateur_id INT)

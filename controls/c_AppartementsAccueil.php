@@ -80,6 +80,53 @@ require_once('../models/ModeleDonnees.php');
 
             
     }
+
+    if (isset($_POST['search-appartement'])) {
+
+
+
+        $modele = new ModeleDonnees('lecture');
+        $resultats = $modele->chercheAppartement3criter($_POST['arrondisment'], $_POST['prix_max'] , $_POST['prix_min']);
+
+        if (!empty($resultats)) {
+            foreach ($resultats as $donneesAppartement) {
+            
+                $dateTime = new DateTime($donneesAppartement['date_libre']);
+            
+                $formatter = new IntlDateFormatter(
+                    'fr_FR',
+                    IntlDateFormatter::FULL,
+                    IntlDateFormatter::NONE,
+                    null,
+                    null,
+                    'd MMMM yyyy'
+                );
+                
+                $appartement = new Appartement(
+                    $donneesAppartement['numappart'],
+                    '',
+                    $donneesAppartement['rue'],
+                    $donneesAppartement['arrondisse'],
+                    $donneesAppartement['etage'],
+                    $donneesAppartement['typappart'],
+                    $donneesAppartement['prix_loc'],
+                    $donneesAppartement['prix_charg'],
+                    $donneesAppartement['ascenseur'],
+                    $donneesAppartement['preavis'],
+                    $formatter->format($dateTime),
+                    $donneesAppartement['id_utilisateur']
+                );
+                
+                $appartements[] = $appartement;
+            }
+        }
+        else {
+            $messageNoAppart= " <div class='height-100 width-100 align-horizontaly text-color-black'><h3>Aucune annonce disponible</h3></div>";
+        }
+
+    }
+
+
     if (isset($_POST['demande_reservation']))
     {
         include_once('../models/UtilisateurModel.php');

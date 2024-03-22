@@ -168,8 +168,7 @@ if (isset($_SESSION['utilisateur'])) {
                 header("Location: ../view/v_erreur.php");
                 exit;
             }
-            
-            
+
         }
 
 

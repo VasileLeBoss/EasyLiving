@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($resultats !== false) {
         // Utiliser $resultats pour créer l'objet Utilisateur
-        $utilisateur = new Utilisateur($resultats['id_utilisateur'], $resultats['email'], $resultats['nom'], $resultats['prenom'], $resultats['tel'], $resultats['adresse'], $resultats['code_ville']);
+        $utilisateur = new Utilisateur($resultats['id_utilisateur'], $resultats['email'], $resultats['nom'], $resultats['prenom'], $resultats['tel'], $resultats['adresse'], $resultats['code_ville'],$resultats['role']);
         
         // Stocker l'objet Utilisateur dans la session
         $_SESSION['utilisateur'] = $utilisateur;

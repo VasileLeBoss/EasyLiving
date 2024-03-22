@@ -50,7 +50,7 @@ class ModeleDonnees
 		try {
 			// Étendre la requête pour inclure toutes les informations
 			$requete = "INSERT INTO utilisateur (email, mdp, nom, prenom,  adresse, tel, code_ville) 
-						VALUES (:email, :mdp, :nom, :prenom, :adresse, :tel,  :code_ville)";
+						VALUES (:email, :mdp, :nom, :prenom, :adresse, :tel,  :code_ville, :role)";
 			
 			$ordre = $this->monPDOstatique->prepare($requete);
 	
@@ -62,6 +62,7 @@ class ModeleDonnees
 			$ordre->bindParam(':tel', $tel, PDO::PARAM_STR);  
 			$ordre->bindParam(':adresse', $adresse, PDO::PARAM_STR);
 			$ordre->bindParam(':code_ville', $code_ville, PDO::PARAM_STR); 
+			$ordre->bindParam(':role','user', PDO::PARAM_STR); 
 			$ordre->execute();
 			
 			return $ordre->rowCount();
@@ -73,17 +74,16 @@ class ModeleDonnees
 	
 	public function verifierLoginMdP($email, $mdp) {
 		try {
-			$requete = "SELECT id_utilisateur, email, mdp, nom, prenom, adresse, tel, code_ville FROM utilisateur WHERE email = :email";
+			$requete = "SELECT id_utilisateur, email, mdp, nom, prenom, adresse, tel, code_ville,role FROM utilisateur WHERE email = :email";
 			$ordre = $this->monPDOstatique->prepare($requete);
 			$ordre->bindParam(':email', $email, PDO::PARAM_STR);
 			$ordre->execute();
-	
 			$utilisateur = $ordre->fetch(PDO::FETCH_ASSOC);
 	
 			// Vérifier le mot de passe avec password_verify
 			if ($utilisateur && password_verify($mdp, $utilisateur['mdp'])) {
-				// Ne renvoyez que les informations nécessaires
-				unset($utilisateur['mdp']);  // Ne renvoyez pas le mot de passe haché
+
+				unset($utilisateur['mdp']); 
 				return $utilisateur;
 			}
 	
@@ -96,7 +96,7 @@ class ModeleDonnees
 
 	public function getUtilisateurByEmail($email) {
         try {
-            $requete = "SELECT id_utilisateur, email, nom, prenom, adresse, tel, code_ville FROM utilisateur WHERE email = :email";
+            $requete = "SELECT id_utilisateur, email, nom, prenom, adresse, tel, code_ville,role FROM utilisateur WHERE email = :email";
             $ordre = $this->monPDOstatique->prepare($requete);
             $ordre->bindParam(':email', $email, PDO::PARAM_STR);
             $ordre->execute();
@@ -104,6 +104,21 @@ class ModeleDonnees
             $resultat = $ordre->fetch(PDO::FETCH_ASSOC);
 
             return $resultat; // Renvoie les informations de l'utilisateur ou false s'il n'est pas trouvé
+        } catch (PDOException $e) {
+            
+            die("Erreur lors de la récupération de l'utilisateur par e-mail : " . $e->getMessage());
+        }
+    }
+
+	public function getAllUtilisateurs() {
+        try {
+            $requete = "SELECT id_utilisateur, email, nom, prenom, adresse, tel, code_ville,role FROM utilisateur";
+            $ordre = $this->monPDOstatique->prepare($requete);
+            $ordre->execute();
+
+            $resultat = $ordre->fetchAll(PDO::FETCH_ASSOC);
+
+            return $resultat; 
         } catch (PDOException $e) {
             
             die("Erreur lors de la récupération de l'utilisateur par e-mail : " . $e->getMessage());
@@ -293,7 +308,6 @@ class ModeleDonnees
 		{
 			$requete = "SELECT * FROM appartements ORDER BY numappart DESC;
 			";
-	
 			$ordre = $this->monPDOstatique->prepare($requete);
 	
 			$ordre->execute();
@@ -625,21 +639,38 @@ class ModeleDonnees
 		}
 	}
 
-
-
-
-	
 	public function getDemandeurById($id_demandeur)
 	{
 		try
 		{
-			$requete = "SELECT u.id_utilisateur, u.email, u.nom, u.prenom, u.adresse, u.tel, u.code_ville
+			$requete = "SELECT u.id_utilisateur, u.email, u.nom, u.prenom, u.adresse, u.tel, u.code_ville,u.role
 			FROM utilisateur u
 			JOIN demandes d ON u.id_utilisateur = d.id_demandeur
 			WHERE d.id_demandeur = ?
 			LIMIT 1 ;";
 			$ordre = $this->monPDOstatique->prepare($requete);
 			$ordre->bindValue(1, $id_demandeur, PDO::PARAM_INT);
+			$ordre->execute();
+			$resultat = $ordre->fetch(PDO::FETCH_ASSOC);
+			$ordre->closeCursor();
+			return $resultat;
+		}
+		catch (PDOException $e) {
+			error_log("Erreur lors de la recherche : " . $e->getMessage());
+			return false;
+		}
+	}
+	public function getproprieterById($id_proprieter)
+	{
+		try
+		{
+			$requete = "SELECT u.id_utilisateur, u.email, u.nom, u.prenom, u.adresse, u.tel, u.code_ville,u.role
+			FROM utilisateur u
+			JOIN demandes d ON u.id_utilisateur = d.id_proprieter
+			WHERE d.id_proprieter = ?
+			LIMIT 1 ;";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindValue(1, $id_proprieter, PDO::PARAM_INT);
 			$ordre->execute();
 			$resultat = $ordre->fetch(PDO::FETCH_ASSOC);
 			$ordre->closeCursor();
@@ -651,19 +682,15 @@ class ModeleDonnees
 			return false;
 		}
 	}
-	public function getproprieterById($id_proprieter)
+	
+	public function getAllDemandes()
 	{
-		try
+		try 
 		{
-			$requete = "SELECT u.id_utilisateur, u.email, u.nom, u.prenom, u.adresse, u.tel, u.code_ville
-			FROM utilisateur u
-			JOIN demandes d ON u.id_utilisateur = d.id_proprieter
-			WHERE d.id_proprieter = ?
-			LIMIT 1 ;";
+			$requete = "SELECT * FROM demandes ORDER BY `num_dem`";
 			$ordre = $this->monPDOstatique->prepare($requete);
-			$ordre->bindValue(1, $id_proprieter, PDO::PARAM_INT);
 			$ordre->execute();
-			$resultat = $ordre->fetch(PDO::FETCH_ASSOC);
+			$resultat = $ordre->fetchAll(PDO::FETCH_ASSOC);
 			$ordre->closeCursor();
 			return $resultat;
 			
@@ -814,6 +841,31 @@ class ModeleDonnees
 			return false;
 		}
 	}
+
+	public function chercheAppartement3criter($arrondisse, $prix_max, $prix_min)
+{
+    try {
+        $requete = "SELECT * 
+                    FROM appartements 
+                    WHERE (:arrondisse = 0 OR arrondisse = :arrondisse)
+                    AND (:prix_max = 0 OR (prix_loc + prix_charg) <= :prix_max)
+                    AND (:prix_min = 0 OR (prix_loc + prix_charg) >= :prix_min)";
+        
+        $ordre = $this->monPDOstatique->prepare($requete);
+        $ordre->bindValue(':arrondisse', $arrondisse, PDO::PARAM_INT);
+        $ordre->bindValue(':prix_max', $prix_max, PDO::PARAM_INT);
+        $ordre->bindValue(':prix_min', $prix_min, PDO::PARAM_INT);
+        $ordre->execute();
+        $resultat = $ordre->fetchAll(PDO::FETCH_ASSOC);
+        $ordre->closeCursor();
+        return $resultat;
+    } catch (PDOException $e) {
+        error_log("Erreur lors de la recherche : " . $e->getMessage());
+        return false;
+    }
+}
+
+	
 
 }// fin classe
 ?>

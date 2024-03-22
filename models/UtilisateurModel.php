@@ -7,9 +7,10 @@ class Utilisateur {
     private $tel;
     private $adresse;
     private $code_ville;
+    private $role;
 
     // Constructeur pour initialiser un utilisateur
-    public function __construct($id="?", $email="?",$nom="?",$prenom="?",$tel="?",$adresse="?",$code_ville="?") {
+    public function __construct($id="?", $email="?",$nom="?",$prenom="?",$tel="?",$adresse="?",$code_ville="?",$role="?") {
         $this->id = $id;
         $this->email = $email;
         $this->nom = $nom;
@@ -17,6 +18,7 @@ class Utilisateur {
         $this->tel = $tel;
         $this->adresse = $adresse;
         $this->code_ville = $code_ville;
+        $this->role = $role;
 
     }
 
@@ -34,6 +36,9 @@ class Utilisateur {
         return $this->code_ville;
     }
 
+    public function getRole() {
+        return $this->role;
+    }
     
     public function getNomComplet() {
         return $this->prenom . ' ' . $this->nom;
@@ -52,6 +57,12 @@ class Utilisateur {
     public static function estConnecte() {
         return isset($_SESSION['utilisateur']) && $_SESSION['utilisateur'] instanceof Utilisateur;
     }
+
+    public static function estAdmin() {
+       
+        return self::estConnecte() && $_SESSION['utilisateur']->getRole() === 'admin';
+    }
+    
     public function setId($id) {
         $this->id = $id;
     }
@@ -113,7 +124,8 @@ class Utilisateur {
                 $utilisateur['prenom'],
                 $utilisateur['tel'],
                 $utilisateur['adresse'],
-                $utilisateur['code_ville']
+                $utilisateur['code_ville'],
+                $utilisateur['role']
             );
         }
 
@@ -129,7 +141,6 @@ class Utilisateur {
 
     public function calculeRevenuUtilisateur()
     {
-
         require_once('../models/ModeleDonnees.php');
         $monModele = new ModeleDonnees('lecture');
         $revenuUtilisateur = $result = $monModele->revenuUtilisateur($this->getId());
@@ -145,8 +156,6 @@ class Utilisateur {
             
             $revenuTotal += ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
         }
-
-       
         return $revenuTotal;
 
 
@@ -217,6 +226,98 @@ class Utilisateur {
     
         return $formatter->format($dateTime);
     }
+
+    public function formaterDateDemande($date)
+    {
+        $dateTime = new DateTime($date);
     
+        $formatter = new IntlDateFormatter(
+            'fr_FR',
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::NONE,
+            null,
+            null,
+            'dd-MM-yyyy'
+        );
+    
+        return $formatter->format($dateTime);
+    }
+    
+    public function getAllUtilisateurs()
+    {
+        if (Utilisateur::estAdmin()) 
+        {
+            require_once('../../models/ModeleDonnees.php');
+            $monModele = new ModeleDonnees('lecture');
+            $results = $monModele->getAllUtilisateurs();
+            $utilisateurs=[];
+            foreach($results as $utilisateur)
+            {
+                $newUser = new Utilisateur;
+                $utilisateurs[]= $newUser->createUtilisateur($utilisateur);
+            }
+            
+        
+            return $utilisateurs;
+        }
+
+        return false;
+    }
+    public function GetAllAppartements()
+    {
+        if (Utilisateur::estAdmin()) 
+        {
+            require_once('../../models/ModeleDonnees.php');
+            $monModele = new ModeleDonnees('lecture');
+            $results = $monModele->GetAllAppartements();
+            $Appartements=[];
+            foreach($results as $Appartement)
+            {
+                $newAppartement = new Appartement;
+                $Appartements[]= $newAppartement->createAppartementFromAnnonce($Appartement);
+            }
+            
+        
+            return $Appartements;
+        }
+
+        return false;
+    }
+    public function getAllDemandes()
+    {
+        if (Utilisateur::estAdmin()) 
+        {
+            require_once('../../models/ModeleDonnees.php');
+            $monModele = new ModeleDonnees('lecture');
+            $results = $monModele->getAllDemandes();
+            
+            return $results;
+        }
+    
+        return false;
+    }
+
+    public function calculeAdminRevenuUtilisateur() {
+
+        if (Utilisateur::estAdmin()) 
+        {
+        require_once('../../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $revenuUtilisateur = $monModele->revenuUtilisateur($this->getId());
+        $revenuTotal = 0;
+    
+        foreach ($revenuUtilisateur as $revenu) {
+            $dateArrivee = new DateTime($revenu['dateArrivee']);
+            $dateDepart = new DateTime($revenu['dateDepart']);
+            $nombreJours = $dateDepart->diff($dateArrivee)->days + 1;
+    
+            $revenuTotal += ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
+        }
+        return $revenuTotal;
+    }
+    return false;
+    }
+
+
 }
 ?>

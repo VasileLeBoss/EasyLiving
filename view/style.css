@@ -63,6 +63,7 @@ body.no-scroll, html.no-scroll {
             --filter-image:invert(100%);
             --logo-color-responsiv:#ffffff;
             
+
         }
         }
         
@@ -227,9 +228,9 @@ li {
     margin: 0;
     padding: 0;
 }
-.relative
+.relative 
 {
-position: relative;
+position: relative !important;
 }
 input.supprimer
 {
@@ -278,11 +279,11 @@ input.supprimer:hover
 }
 
 .align-verticaly {
-    display: flex;
+    display: flex !important;
     align-items: center !important;
 }
 .align-horizontaly {
-    display: flex;
+    display: flex !important;
     justify-content: center !important; 
 }
 .space-between
@@ -302,7 +303,7 @@ input.supprimer:hover
 }
 
 .end {
-    justify-content: end ;
+    justify-content: end !important;
 }
 .align-items-end
 {
@@ -724,6 +725,63 @@ p {
 .flex-column
 {
     flex-direction: column;
+}
+.search-appartement-wraper
+{
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    padding-bottom: 0;
+}
+.search-appartement
+{
+    display: flex;
+    padding: 25px;
+    color: var(--text-color-black);
+justify-content: center;
+    border-radius: 16px;
+    background-color: var(--second-backgraund-color);
+
+}
+.search-appartement-param
+{
+    display: flex;
+    gap: 10px;
+}
+.search-appartement input ,.search-appartement select
+{
+    height: 35px;
+    box-sizing: border-box;
+
+    border-radius: 5px;
+    width: 122px;
+    background-color: transparent;
+    border: none;
+    padding-inline: 6px;
+    color: var(--text-color-black);
+    border: 1px solid var(--text-color-black);
+}
+.search-appartement button
+{
+    background-color: var(--second-color);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    height: 35px;
+    padding-inline: 12px;
+    color: var(--text-color-white);
+    transition: var(--transition-time);
+}
+.search-appartement button:hover
+{
+    cursor: pointer;
+    border: none;
+    background-color: var(--text-color-white);
+    color: var(--second-color);
+}
+.search-appartement select option
+{
+    background-color: var(--second-backgraund-color);
+    color: var(--text-color-black);
 }
 .full-width-white-header-flex
 {
@@ -1477,6 +1535,10 @@ table.table_annonce tr td:nth-child(2) ,.table_confirmation tr td:nth-child(2), 
 {
     font-size:24px !important;
 }
+.font-size-72px
+{
+    font-size:72px
+}
 .font-size-16px
 {
     font-size: 16px !important;
@@ -1986,9 +2048,19 @@ filter: var(--filter-image);
     position: fixed;
     color: var(--text-color-white);
     box-sizing: border-box;
-    bottom: 0;
+    bottom: -195px;
+    transition: var(--transition-time);
     padding-bottom: 15px;
     z-index: 15;
+}
+.cotisation h2 ion-icon
+{
+    font-size: 2rem;
+
+}
+.cotisation h2:hover
+{
+    cursor: pointer;
 }
 .cotisation ul 
 {
@@ -1999,18 +2071,20 @@ filter: var(--filter-image);
     margin-bottom: 25px;
     border-bottom: 1px solid var(--text-color-white);
     border-left: 1px solid var(--text-color-white);
-    width: 100%;
     height: 150px;
-
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+    width: 100%;
 }
 .cotisation ul li 
 {
-height: 50%;
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
     box-sizing: border-box;
     background-color: var(--second-color);
-    width: 54px;
+    width: 54px !important;
 }
 
 
@@ -2021,6 +2095,7 @@ border-top-right-radius: 10px;
     border-bottom: 1px solid var(--text-color-black);
     list-style-type: none;
 }
+
 .cotisation ul li .mois-li
 {
     position: absolute;
@@ -2029,9 +2104,147 @@ border-top-right-radius: 10px;
 }
 .cotisation ul li .revenu-li
 {
-
     position: absolute;
     top: 10px;
+}
+
+.header-admin-panel
+{
+    position: fixed;
+    left: 0;
+    display: flex;
+    width: 264px;
+    height: 100vh;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: var(--second-backgraund-color);
+    padding-bottom: 16px;
+    padding-top: 16px;
+    -webkit-box-shadow: 0px 8px 18px 1px var(--transparent-black);
+    -moz-box-shadow: 0px 8px 18px 1px var(--transparent-black);
+    box-shadow: 0px 8px 18px 1px var(--transparent-black);
+
+}
+.header-admin-panel .logo-admin svg
+{
+    height: 72px;
+}
+.header-admin-panel .logo-admin svg path
+{
+    fill: var(--second-color);
+    transition: var(--transition-time);
+}
+.header-admin-panel .logo-admin:hover svg path
+{
+    fill: var(--second-color);
+}
+.header-admin-panel ul
+{
+
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+
+.header-admin-panel ul ion-icon
+{
+ font-size: 32px;
+ margin-right: 12px;
+}
+.header-admin-panel ul li
+{
+    padding-inline: 16px;
+}
+.header-admin-panel ul li a
+{
+    color: var(--text-color-black);
+    transition: var(--transition-time);
+}
+.header-admin-panel ul li:hover a:not(.logo-admin)
+{
+    color: var(--second-color);
+}
+.header-admin-panel ul h1,.header-admin-panel ul h3
+{
+    margin: 0;
+}
+
+body.admin
+{
+    margin: 0;
+    margin-left: 264px;
+    width: calc(100% - 264px);
+    min-height: 100vh;
+    padding: 0;
+    color: var(--text-color-black);
+}
+.admin-conteiner
+{
+    padding: 54px;
+}
+.admin-dashboard ion-icon
+{
+    font-size: 36px !important;
+}
+.admin-dashboard
+{
+    display: grid;
+    gap: 54px;
+    grid-template-columns: repeat(4,1fr);
+}
+
+.admin-dashboard button
+{
+    color: var(--text-color-black);
+    padding-inline: 24px;
+    background-color: transparent;
+    border: 1px solid var(--text-color-black);
+}
+.admin-dashboard button:hover
+{
+    color: var(--second-color);
+    background-color: transparent;
+    border-color: var(--second-color);
+}
+.admin-dashboard .box:nth-child(5n) {
+    grid-column: span 3;
+}
+.box-demandes
+{
+    display: grid;
+    grid-template-columns:0.5fr 1fr 1fr ;
+    padding-block: 16px;
+    padding-inline: 12px;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--second-color-text);
+    white-space: nowrap;
+    overflow: hidden;
+}
+.box-user
+{
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 1fr 2fr 1fr 1fr 1fr;
+    padding-block: 16px;
+    padding-inline: 12px;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--second-color-text);
+    white-space: nowrap;
+    overflow: hidden;
+}
+.box-user > div,.box-demandes > div {
+    flex: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.trending-up
+{
+    position: absolute;
+    top: 20px;
+    right: 32px;
+    color: var(--green);
+    font-size: 3rem;
 }
   @keyframes rotate {
     from {
@@ -2061,14 +2274,67 @@ border-top-right-radius: 10px;
         box-sizing: border-box;
 
     }
+    .admin-dashboard
+    {
+        gap: 12px;
+        grid-template-columns: repeat(1,1fr);
+    }
+    .admin-dashboard .box:nth-child(5n) {
+        grid-column: span 1;
+    }
+
+    .header-admin-panel
+{
+    width: 41px;
+
+    height: 100vh;
+}
+.header-admin-panel ul
+{
+    padding-top: 12px;
+}
+body.admin
+{
+    margin-left: 41px;
+    width: calc(100% - 41px);
+}
+.header-admin-panel ul li
+{
+    padding-inline: 4px;
+}
+.header-admin-panel ul ion-icon
+{
+
+ margin-right: 0;
+}
+.admin-conteiner
+{
+    padding: 16px;
+}
+
+    .search-appartement-param
+{
+flex-direction: column;
+}
+.cotisation ul
+{
+    gap: 12px;
+}
+.search-appartement-param input
+{
+
+    width: 100% !important ;
+}
+.search-appartement-param select
+{
+    width: 100%;
+    max-width: 100% !important;
+}
     .show-on-mobile
 {
     display: block !important;
 }
-.cotisation
-{
-    position: relative;
-}
+
 .grid-view-annonce
 {
     grid-template-columns: repeat(1, 1fr);
@@ -2246,12 +2512,20 @@ input[type="search"]
 {
     width: 100%;
 }
+.search-appartement
+{
+    width: 100%;
+    flex-wrap: wrap;
+}
 .grid-columns-annonce-modif
 {
     display: grid;
     grid-template-columns: 1fr ;
     gap: 30px;
 }
+
+
+
 }
 
 

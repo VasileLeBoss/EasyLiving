@@ -38,8 +38,17 @@ if (isset($_SESSION['utilisateur'])) {
             $modele->UpdateStatusDemandeById($id,'an');
 
 
-            header("Location: ../view/v_view-voyage.php");
-            exit;
+            switch ($_POST["location"]) {
+                case 'demande':
+                    header("Location: ../view/v_compte-annonce.php");
+                    break;
+                case 'voyage':
+                        header("Location: ../view/v_view-voyage.php");
+                        break;
+                default:
+                header("Location: ../view/v_erreur.php");
+                break;
+            }
         }
         if (isset($_POST['approuver-demande-ap'])) {
             $modele = new ModeleDonnees('ecriture');

@@ -79,10 +79,10 @@ include('../controls/connected.php');
         </div>
 
         <div class="width-100">
-        <div class=" align-horizontaly align-verticaly end">
+        <div class=" align-horizontaly align-verticaly ">
         <span class="font-size-12px">Besoin de désactiver votre compte ?</span>
         </div>
-        <div class="align-horizontaly align-verticaly end">
+        <div class="align-horizontaly align-verticaly ">
             <span><a href="v_compte-suppresion.php" class="underline grey font-size-12px">M'en occuper maintenant</a></span>
         </div>
         </div>

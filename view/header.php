@@ -52,15 +52,23 @@ include('../controls/check_inactivity.php');
                 </div>
             </span>
             <ul class="user-menu " id="userMenu">
+                
+                <?php if (Utilisateur::estAdmin()) : ?>
+                    <hr>
+                    <a href="admin"><li><span class="aligne-icon"><ion-icon name="shield-half-outline"></ion-icon>Admin</span></li></a>
+                <?php endif; ?>
+                
                 <hr>
                 <a href="v_compte.php"><li><span class="aligne-icon" ><ion-icon name="person-outline"></ion-icon>Compte</span></li></a>
                 <hr>
                 <a href="v_view-voyage.php"><li><span class="aligne-icon"><ion-icon name="paper-plane-outline"></ion-icon>Voyages</span></li></a>
                 
                 <a class="relative" href="v_compte-annonce.php"><li><span class="aligne-icon"><ion-icon name="grid-outline"></ion-icon>Gérer mes annonces <span class="notification-relative "><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span></span></li></a>
+                
                 <hr>
                 <a href="../controls/deconnexion.php"><li><span class="aligne-icon"><ion-icon name="log-out-outline"></ion-icon>Se déconnecter</span></li></a>
                 <hr>
+
             </ul>
         </li>
         <li class="show-on-mobile"><a class="menu"><span class="relative align-verticaly align-horizontaly"><span class="notification-absolute-menu"><?php echo $_SESSION['utilisateur']->getNombreDemandesUtilisateur(); ?></span><ion-icon name="menu-outline"></ion-icon></span></a></li>
@@ -70,6 +78,7 @@ include('../controls/check_inactivity.php');
 
 <ul class="menu-items">
     <?php  if (!Utilisateur::estConnecte()) : ?>
+        
         <hr>
         <!-- <a href="v_depot-annonce.php"><li><span class="aligne-icon"><ion-icon name="bed-outline"></ion-icon>Demander un logement</span></li></a> -->
 
@@ -78,7 +87,12 @@ include('../controls/check_inactivity.php');
         <a href="v_connexion.php"><li><span class="aligne-icon"><ion-icon name="log-in-outline"></ion-icon>Se connecter</span></li></a>
         <hr>
     <?php else : ?>
-        <hr>
+        
+                <?php if (Utilisateur::estAdmin()) : ?>
+                    <hr>
+                    <a href="admin"><li><span class="aligne-icon"><ion-icon name="shield-half-outline"></ion-icon>Admin</span></li></a>
+                <?php endif; ?>
+                <hr>
                 <a href="v_compte.php"><li ><span class="aligne-icon" ><ion-icon name="person-outline"></ion-icon>Compte</span></li></a>
                 <hr>
                 <a href="v_view-voyage.php"><li><span class="aligne-icon"><ion-icon name="paper-plane-outline"></ion-icon>Voyages</span></li></a>

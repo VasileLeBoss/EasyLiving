@@ -44,7 +44,7 @@
 
             <div class="display-flex gap-10px align-horizontaly">
                 <div class="display-flex flex-column gap-10px align-verticaly">
-                    <span class="small second-color">PROPRIETER</span>
+                    <span class="small second-color">PROPRIETAIRE</span>
                     <?php echo $proprieter->getNomComplet() ;?>
                 </div>
             </div>
@@ -84,7 +84,7 @@
             <div class="display-grid grid-template-columns-2 gap-10px">
                 <div class="display-flex flex-column gap-10px">
                     <div class="display-flex flex-column gap-5px">
-                        <span class="small second-color">ADDRESS</span>
+                        <span class="small second-color">ADDRESSE</span>
 
                         <span class="capitalize"><?php echo $appartementAnnonce->getRue(); ?>, Paris
                             <?php echo $appartementAnnonce->getArrondissement() > 1 ? $appartementAnnonce->getArrondissement() . 'ème' : $appartementAnnonce->getArrondissement() . 'er'; ?></span>
@@ -152,7 +152,7 @@
 
             <div class="display-flex gap-10px align-horizontaly">
                 <div class="display-flex flex-column gap-10px align-verticaly">
-                    <span class="small second-color">PROPRIETER</span>
+                    <span class="small second-color">PROPRIETAIRE</span>
                     <?php echo $proprieter->getNomComplet() ;?>
                 </div>
             </div>
@@ -189,6 +189,10 @@
                             type="hidden"
                             name="annuler-demande-an"
                             value="<?php echo $demande['num_dem'] ?>">
+                            <input
+                            type="hidden"
+                            name="location"
+                            value="voyage">
                         <button id="decliner">
                             <ion-icon class="rotate-icon" name="close-circle-outline"></ion-icon>
                         </button>
@@ -203,7 +207,7 @@
             <div class="display-grid grid-template-columns-2 gap-10px">
                 <div class="display-flex flex-column gap-10px">
                     <div class="display-flex flex-column gap-5px">
-                        <span class="small second-color">ADDRESS</span>
+                        <span class="small second-color">ADDRESSE</span>
 
                         <span class="capitalize"><?php echo $appartementAnnonce->getRue(); ?>, Paris
                             <?php echo $appartementAnnonce->getArrondissement() > 1 ? $appartementAnnonce->getArrondissement() . 'ème' : $appartementAnnonce->getArrondissement() . 'er'; ?></span>
@@ -355,7 +359,7 @@
 
             <div class="display-flex gap-10px align-horizontaly">
                 <div class="display-flex flex-column gap-10px align-verticaly">
-                    <span class="small second-color">PROPRIETER</span>
+                    <span class="small second-color">PROPRIETAIRE</span>
                     <?php echo $proprieter->getNomComplet() ;?>
                 </div>
             </div>
@@ -391,6 +395,10 @@
                             type="hidden"
                             name="annuler-demande-an"
                             value="<?php echo $demande['num_dem'] ?>">
+                            <input
+                            type="hidden"
+                            name="location"
+                            value="voyage">
                         <button id="decliner">
                             <ion-icon class="rotate-icon" name="close-circle-outline"></ion-icon>
                         </button>
@@ -406,7 +414,7 @@
             <div class="display-grid grid-template-columns-2 gap-10px">
                 <div class="display-flex flex-column gap-10px">
                     <div class="display-flex flex-column gap-5px">
-                        <span class="small second-color">ADDRESS</span>
+                        <span class="small second-color">ADDRESSE</span>
 
                         <span class="capitalize"><?php echo $appartementAnnonce->getRue(); ?>, Paris
                             <?php echo $appartementAnnonce->getArrondissement() > 1 ? $appartementAnnonce->getArrondissement() . 'ème' : $appartementAnnonce->getArrondissement() . 'er'; ?></span>
@@ -476,7 +484,7 @@
 
             <div class="display-flex gap-10px align-horizontaly">
                 <div class="display-flex flex-column gap-10px align-verticaly">
-                    <span class="small second-color">PROPRIETER</span>
+                    <span class="small second-color">PROPRIETAIRE</span>
                     <?php echo $proprieter->getNomComplet() ;?>
                 </div>
             </div>
@@ -552,7 +560,7 @@
 
             <div class="display-flex gap-10px align-horizontaly">
                 <div class="display-flex flex-column gap-10px align-verticaly">
-                    <span class="small second-color">PROPRIETER</span>
+                    <span class="small second-color">PROPRIETAIRE</span>
                     <?php echo $proprieter->getNomComplet() ;?>
                 </div>
             </div>

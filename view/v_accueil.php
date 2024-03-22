@@ -6,6 +6,7 @@ include('header.php');
     <?php
 include('second-header.php');
 ?>
+
     <?php if (empty($appartements)) :  echo $messageNoAppart?>
 <?php else: ?>
     <div class="conteiner-grid-accueil-annonces">

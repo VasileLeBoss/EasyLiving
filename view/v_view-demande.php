@@ -78,6 +78,10 @@
                         type="hidden"
                         name="annuler-demande-an"
                         value="<?php echo $demande['num_dem'] ;?>">
+                        <input
+                            type="hidden"
+                            name="location"
+                            value="demande">
                     <button id="decliner">
                         <ion-icon class="rotate-icon" name="close-circle-outline"></ion-icon>
                     </button>
@@ -193,7 +197,12 @@
                     <input
                         type="hidden"
                         name="annuler-demande-an"
+                        
                         value="<?php echo $demande['num_dem'] ?>">
+                        <input
+                            type="hidden"
+                            name="location"
+                            value="demande">
                     <button id="decliner">
                         <ion-icon class="rotate-icon" name="close-circle-outline"></ion-icon>
                     </button>

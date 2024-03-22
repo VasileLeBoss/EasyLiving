@@ -177,17 +177,18 @@ require_once('../controls/c_AppartementsUtilisateur.php');
 <div class="cotisation">
     <div class="display-flex space-between">
         <div>
-            <h2 class=" underline">Revenu</h2>
+            <h2 class="underline"  onclick="toggleDetailCotisation()"><span class="align-verticaly gap-10px"><ion-icon id="icon-cotisation" name="chevron-down-outline"></ion-icon>Revenu</span></h2>
         </div>
         <div>
-            <h2><?php echo $_SESSION['utilisateur']->calculeRevenuUtilisateur()*0.93." €"; ?></h2>
+            <h2 onclick="toggleDetailCotisation()"><?php echo $_SESSION['utilisateur']->calculeRevenuUtilisateur()*0.93." €"; ?></h2>
         </div>
     </div>
     <div class="display-flex">
         <div>
             <?php $revenuparmois = $_SESSION['utilisateur']->revenusParMoisUtilisateur(); ?>
         </div>
-        <ul class="capitalize display-flex gap-24px flex-end">
+        <ul class="capitalize">
+          
             <?php foreach($revenuparmois as $mois => $revenu) : ?>
             <li
                 class="display-flex flex-column space-between align-verticaly revenu-li relative"
@@ -196,6 +197,7 @@ require_once('../controls/c_AppartementsUtilisateur.php');
                 <span class="mois-li"><?php echo $_SESSION['utilisateur']->formaterMoisAnnee($mois);?></span>
             </li>
             <?php endforeach; ?>
+            
         </ul>
 
     </div>
@@ -212,5 +214,23 @@ require_once('../controls/c_AppartementsUtilisateur.php');
         });
     });
 </script>
+<script>
+    function toggleDetailCotisation() {
+        var divCotisations = document.querySelectorAll('.cotisation');
+        var iconCotisation = document.getElementById('icon-cotisation');
+        divCotisations.forEach(function(divCotisation) {
+            var currentBottom = divCotisation.style.bottom;
+            if (currentBottom == "0px") {
+                divCotisation.style.bottom = "-195px";
+                iconCotisation.classList.remove('rotate-icon');
+            } else {
+                divCotisation.style.bottom = "0px";
+                iconCotisation.classList.add('rotate-icon');
+            }
+        });
+    }
+</script>
+
+
 
 <?php endif;?>

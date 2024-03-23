@@ -93,12 +93,27 @@ class ModeleDonnees
 			throw new Exception("Erreur lors de la vérification du login et du mot de passe : " . $e->getMessage());
 		}
 	}
-
+	
 	public function getUtilisateurByEmail($email) {
         try {
             $requete = "SELECT id_utilisateur, email, nom, prenom, adresse, tel, code_ville,role FROM utilisateur WHERE email = :email";
             $ordre = $this->monPDOstatique->prepare($requete);
             $ordre->bindParam(':email', $email, PDO::PARAM_STR);
+            $ordre->execute();
+
+            $resultat = $ordre->fetch(PDO::FETCH_ASSOC);
+
+            return $resultat; // Renvoie les informations de l'utilisateur ou false s'il n'est pas trouvé
+        } catch (PDOException $e) {
+            
+            die("Erreur lors de la récupération de l'utilisateur par e-mail : " . $e->getMessage());
+        }
+    }
+	public function getUtilisateurByID($id) {
+        try {
+            $requete = "SELECT id_utilisateur, email, nom, prenom, adresse, tel, code_ville,role FROM utilisateur WHERE id_utilisateur = :id";
+            $ordre = $this->monPDOstatique->prepare($requete);
+            $ordre->bindParam(':id', $id, PDO::PARAM_STR);
             $ordre->execute();
 
             $resultat = $ordre->fetch(PDO::FETCH_ASSOC);
@@ -400,7 +415,25 @@ class ModeleDonnees
 			die("Erreur lors de la mise à jour du mot de passe : " . $e->getMessage());
 		}
 	}
+	public function searchUtilisateur($request)
+	{
+		try {
+			$requestWithWildcard = '%' . $request . '%';
+			$requete = "SELECT * FROM utilisateur WHERE (id_utilisateur LIKE :request OR email LIKE :request or nom LIKE :request or prenom LIKE :request or adresse LIKE :request or tel LIKE :request or code_ville LIKE :request)";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindParam(':request', $requestWithWildcard, PDO::PARAM_STR);
+			$success = $ordre->execute();
 	
+			if (!$success) {
+				return false; // Indiquer que la recherche a échoué
+			}
+			$resultats = $ordre->fetchAll(PDO::FETCH_ASSOC);
+			$ordre->closeCursor();
+			return $resultats;
+		} catch (PDOException $e) {
+			die("Erreur lors de la recherche d'annonces : " . $e->getMessage());
+		}
+	}
 	public function searchannoncewhituserid($request, $idUtilisateur)
 	{
 		try {
@@ -549,14 +582,33 @@ class ModeleDonnees
 			if ($resultat['count']>0) {
 				return $resultat['count'];
 			}
-			
+			return false;
 		}
 		catch (PDOException $e) {
 			error_log("Erreur lors de la recherche : " . $e->getMessage());
 			return false;
 		}
 	}
-	
+	public function getNombreAppartementByIdUtilisateur($id_utilisateur)
+	{
+		try
+		{
+			$requete = "SELECT COUNT(*) as count FROM appartements WHERE id_utilisateur = ? ";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindValue(1, $id_utilisateur, PDO::PARAM_INT);
+			$ordre->execute();
+			$resultat = $ordre->fetch(PDO::FETCH_ASSOC);
+			$ordre->closeCursor();
+			if ($resultat['count']>0) {
+				return $resultat['count'];
+			}
+			return false;
+		}
+		catch (PDOException $e) {
+			error_log("Erreur lors de la recherche : " . $e->getMessage());
+			return false;
+		}
+	}
 	public function getNombreDemandesAppartementById($id_appartement)
 	{
 		try

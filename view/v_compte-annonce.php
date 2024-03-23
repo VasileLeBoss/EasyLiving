@@ -50,9 +50,7 @@ include('../controls/connected.php');
             </form>
         </div>
     </div>
-    <?php
-require_once('../controls/c_AppartementsUtilisateur.php');
-?>
+    <?php require_once('../controls/c_AppartementsUtilisateur.php');?>
     <div class="grid-compte">
         <?php if(isset($_SESSION['messageUpdateAnnonce'])) : unset($_SESSION['messageUpdateAnnonce']); endif;?>
         <?php if (empty($appartements)) :  echo $messageNoResult?>
@@ -172,7 +170,7 @@ require_once('../controls/c_AppartementsUtilisateur.php');
         </script>
         <?php endif; ?>
     </div>
-</div>
+
 <?php if($appartement->getNombreLocataireAppartementById() > 0 ): ?>
 <div class="cotisation">
     <div class="display-flex space-between">
@@ -209,7 +207,7 @@ require_once('../controls/c_AppartementsUtilisateur.php');
         var revenuLiElements = document.querySelectorAll('.revenu-li');
         revenuLiElements.forEach(function (liElement) {
             var revenu = parseFloat(liElement.getAttribute('data-revenu'));
-            var hauteur = revenu * 0.07;
+            var hauteur = revenu * 0.025;
             liElement.style.height = hauteur + 'px';
         });
     });
@@ -234,3 +232,4 @@ require_once('../controls/c_AppartementsUtilisateur.php');
 
 
 <?php endif;?>
+</div>

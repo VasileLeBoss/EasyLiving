@@ -198,6 +198,13 @@ class Appartement {
         $this->dateLibre = $dateLibre;
     }
 
+    public function getNombreDemandesAppartementByIdAdmin()
+    {
+        require_once('../../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $result = $monModele->getNombreDemandesAppartementById($this->getNumappart());
+        return $result;
+    }
         
     public function getNombreDemandesAppartementById()
     {
@@ -209,6 +216,13 @@ class Appartement {
     public function getNombreLocataireAppartementById()
     {
         require_once('../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $result = $monModele->getNombreLocataireAppartementById($this->getNumappart());
+        return $result;
+    }
+    public function getNombreLocataireAppartementByIdAdmin()
+    {
+        require_once('../../models/ModeleDonnees.php');
         $monModele = new ModeleDonnees('lecture');
         $result = $monModele->getNombreLocataireAppartementById($this->getNumappart());
         return $result;

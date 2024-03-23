@@ -5,7 +5,7 @@ include('header-admin.php');
 <body class="admin">
     <div class="admin-conteiner">
         <?php include('controls/c_Admin.php');?>
-        <h1 style="margin-top:0;">Tableau de bord</h1>
+        <h1 style="margin-top:0;"><span class="aligne-icon gap-10px"><ion-icon name="grid-outline"></ion-icon>Tableau de bord</span></h1>
 
         <div class="admin-dashboard">
             <div class="box relative">
@@ -17,7 +17,6 @@ include('header-admin.php');
                 <h3 class="no-mar-pad"><span class="aligne-icon gap-10px"><ion-icon name="cash-outline"></ion-icon>Revenue</span> </h3>
                 <ion-icon class="trending-up" name="trending-up-outline"></ion-icon>
                 <h1 class=""><?php echo $revenuPotentiel. " €" ; ?></h1>
-                
             </div>
             <div class="box relative">
             <h3 class="no-mar-pad"><span class="aligne-icon gap-10px"><ion-icon name="albums-outline"></ion-icon>Annonces</span> </h3>
@@ -56,7 +55,9 @@ include('header-admin.php');
                 <?php endfor; ?>
                 <?php if(count($AllUtilisateurs)>8): ?>
                 <div class="display-flex end">
+                    <a href="index.php?view=utilisateurs">
                     <button class="fit-content">Afficher détails</button>
+                    </a>
                 </div>
                 <?php endif;?>
             </div>
@@ -78,7 +79,9 @@ include('header-admin.php');
                 <?php endfor; ?>
                 <?php if(count($AllDemandes)>8): ?>
                 <div class="display-flex end">
+                    <a href="">
                     <button class="fit-content">Afficher détails</button>
+                    </a>
                 </div>
                 <?php endif;?>
             </div>

@@ -107,6 +107,14 @@ class Utilisateur {
         return $result;
     }
     
+    public function getNombreAppartementUtilisateurAdmin()
+    {
+        require_once('../../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $result = $monModele->getNombreAppartementByIdUtilisateur($this->getId());
+        return $result;
+    }
+
     public function getDemandeurById($id_demandeur)
     {
         require_once('../models/ModeleDonnees.php');
@@ -159,6 +167,38 @@ class Utilisateur {
         return $revenuTotal;
 
 
+    }
+    public function revenusParMoisUtilisateurAdmin()
+    {
+        // Initialiser un tableau pour stocker les revenus par mois
+        $revenusParMois = [];
+    
+        require_once('../../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+    
+        $revenuUtilisateur = $monModele->revenuUtilisateur($this->getId());
+    
+        // Parcourir les revenus de l'utilisateur
+        foreach ($revenuUtilisateur as $revenu) {
+            // Extraire le mois et l'année de la date d'arrivée
+            $moisAnnee = date('Y-m', strtotime($revenu['dateArrivee']));
+    
+            // Calculer le revenu pour cet élément
+            $dateArrivee = new DateTime($revenu['dateArrivee']);
+            $dateDepart = new DateTime($revenu['dateDepart']);
+            $nombreJours = $dateDepart->diff($dateArrivee)->days + 1;
+            $revenuElement = ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
+    
+            // Ajouter le revenu au mois correspondant dans le tableau
+            if (isset($revenusParMois[$moisAnnee])) {
+                $revenusParMois[$moisAnnee] += $revenuElement;
+            } else {
+                $revenusParMois[$moisAnnee] = $revenuElement;
+            }
+        }
+    
+        // Retourner le tableau des revenus par mois
+        return $revenusParMois;
     }
     public function revenusParMoisUtilisateur()
 {
@@ -318,6 +358,38 @@ class Utilisateur {
     return false;
     }
 
+    public function getNombreDemandesUtilisateurAdmin()
+    {
+        require_once('../../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $result = count($monModele->getAllDemandesUtilisateur($this->getId()));
+        return $result;
+    }
+
+    
+    public function GetAllAppartementsbyIdUtilisateurAdmin()
+    {
+        require_once('../../models/ModeleDonnees.php');
+        require_once('../../models/AppartementModel.php');
+        $AllAppartements = [];
+        $monModele = new ModeleDonnees('lecture');
+        $results = $monModele->GetAllAppartementsbyIdUtilisateur($this->getId());
+        foreach ($results as $result) 
+        {
+            $newAppartement = new Appartement;
+            $AllAppartements[]= $newAppartement->createAppartementFromAnnonce($result);
+            
+        }
+        return $AllAppartements;
+    }
+    public function getAllDemandesUtilisateurAdmin()
+    {
+        require_once('../../models/ModeleDonnees.php');
+        $monModele = new ModeleDonnees('lecture');
+        $result = $monModele->getAllDemandesUtilisateur($this->getId());
+        return $result;
+    }
+    
 
 }
 ?>

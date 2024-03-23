@@ -5,7 +5,7 @@ include('../controls/connected.php');
 
 <div class="min-conteiner ">
     <div class="full-width-white">
-        <h1>Quel prix souhaitez-vous fixer ? Dans quel délai souhaitez-vous vendre votre bien ?</h1>
+        <h1>Quel prix souhaitez-vous fixer ? </h1>
     </div>
     <form id="form-annonce" action="../controls/c_nouveauAppartement.php" method="post">
     <div class="conteiner-form-annonce">

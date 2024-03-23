@@ -15,18 +15,18 @@ document.addEventListener("DOMContentLoaded", function () {
     var nomError = document.getElementById('nomError');
 
     function validateEmail(email) {
-        var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
         return emailRegex.test(email);
     }
 
     function updateFormState() {
 
-        var isPrenomValid = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/.test(prenomInput.value);
-        var isNomValid = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/.test(nomInput.value);
+        var isPrenomValid = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]{1,20}$/.test(prenomInput.value);
+        var isNomValid = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]{1,20}$/.test(nomInput.value);
         var isEmailValid = validateEmail(emailInput.value);
         var isTelValid = /^\d{10}$/.test(telInput.value); 
         var isCodeValid = /^\d{5}$/.test(codeVilleInput.value);
-        var isadresseValid = /^\d+\s[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+(?:[\s-]\d+\s[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+)*$/.test(adresseInput.value); 
+        var isadresseValid = /^\d+\s[A-Za-zÀ-ÖØ-öø-ÿ\s'-]{1,20}(?:[\s-]\d+\s[A-Za-zÀ-ÖØ-öø-ÿ\s'-]{1,20})*$/.test(adresseInput.value); 
 
         submitBtn.disabled = !(isEmailValid && isTelValid && isCodeValid && isadresseValid && isNomValid && isPrenomValid);
 

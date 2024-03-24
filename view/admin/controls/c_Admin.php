@@ -3,14 +3,24 @@ if (Utilisateur::estAdmin()) {
     $AllUtilisateurs = $_SESSION['utilisateur']->getAllUtilisateurs();
     $AllAppartements = $_SESSION['utilisateur']->GetAllAppartements();
 
+
+
+
     $revenuPotentiel = 0;
+    $revenuTotal = 0;
     foreach ($AllUtilisateurs as $utilisateur) {
 
         $LesTaxes = $utilisateur->calculeAdminRevenuUtilisateur() * 0.07;
+        $totalUtilisateur = $utilisateur->calculeAdminRevenuUtilisateur();
         $revenuPotentiel += $LesTaxes;
+        $revenuTotal += $totalUtilisateur;
     }
 
     $AllDemandes = $_SESSION['utilisateur']->getAllDemandes();
+
+    require_once('../../models/ModeleDonnees.php');
+    $modele = new ModeleDonnees('lecture');
+    $AllLocataire = $modele->getAllLocataire();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') 
     {
@@ -71,7 +81,7 @@ if (Utilisateur::estAdmin()) {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (isset($_GET['view']) && $_GET['view'] === 'utilisateurs') {
             
-            
+            // $donnees = $_SESSION['utilisateur']->revenusParMoisUtilisateurAdmin();
 
             if (isset($_GET['id'])) {
                 
@@ -80,8 +90,18 @@ if (Utilisateur::estAdmin()) {
                 $results = $modele->getUtilisateurByID($_GET['id']);
                 $newUser = new Utilisateur;
                 $user= $newUser->createUtilisateur($results);
-                include('templates/v_utilisateur-details.php'); 
 
+
+                $donnees = $user->revenusParMoisUtilisateurAdmin();
+
+                $donneesProrieter = [];
+                foreach ($donnees as $donnee => $revenu) {
+                    
+                    $revenuProrieter = $revenu*0.93;
+                    $donneesProrieter[$donnee] = $revenuProrieter;
+                }
+
+                include('templates/v_utilisateur-details.php'); 
                 exit;
                 }
 
@@ -102,22 +122,46 @@ if (Utilisateur::estAdmin()) {
             include('templates/v_utilisateur.php'); 
             exit;
         } elseif (isset($_GET['view']) && $_GET['view'] === 'revenue') {
-            echo "revenue";
-            exit;
-        } elseif (isset($_GET['view']) && $_GET['view'] === 'annonces') {
-            echo "annonces";
 
+
+            $donnees = $_SESSION['utilisateur']->revenusParMoisAllUtilisateurAdmin();
+            $donneesEntreprise = [];
+            foreach ($donnees as $donnee => $revenu) {
+                
+                $revenuEntreprise = $revenu*0.07;
+                $donneesEntreprise[$donnee] = $revenuEntreprise;
+            }
+
+
+            include('templates/v_revenu.php');
+            exit;
+
+        } elseif (isset($_GET['view']) && $_GET['view'] === 'annonces') {
+
+            include('templates/v_annonces.php'); 
             exit;
         } elseif (isset($_GET['view']) && $_GET['view'] === 'demandeurs') {
             echo "demandeurs";
-
             exit;
         } elseif (isset($_GET['view']) && $_GET['view'] === 'demandes') {
-            echo "demandes";
+
+
+            $AllDemandes = [];
+            foreach ($AllUtilisateurs as $Utilisateur) {
+                $newDemandes = $Utilisateur->getAllDemandesUtilisateurAdmin();
+                $AllDemandes = array_merge($AllDemandes, $newDemandes);
+            }
+            sort($AllDemandes);
+
+
+            include('templates/v_demandes.php'); 
             exit;
         }
          elseif (isset($_GET['view']) && $_GET['view'] === 'locataires') {
-            echo "locataires";
+
+
+            $AllLocataire = $_SESSION['utilisateur']->getAllLocataire();
+            include('templates/v_locataires.php'); 
             exit;
 
         }  else {

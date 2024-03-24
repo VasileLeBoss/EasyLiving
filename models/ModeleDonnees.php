@@ -651,7 +651,26 @@ class ModeleDonnees
 			return false;
 		}
 	}
+	
+	public function getAllLocataire()
+	{
+		try
+		{
+			$requete = "SELECT * FROM locataires; ";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->execute();
+			$resultat = $ordre->fetchAll(PDO::FETCH_ASSOC);
+			$ordre->closeCursor();
 
+			return $resultat;
+
+			
+		}
+		catch (PDOException $e) {
+			error_log("Erreur lors de la recherche : " . $e->getMessage());
+			return false;
+		}
+	}
 
 	public function getAllDemandesAppartementById($id_appartement)
 	{

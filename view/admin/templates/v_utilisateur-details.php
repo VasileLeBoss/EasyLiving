@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <h1 class="fit-content relative aligne-icon" style="margin-top:0;">
     <a href="?view=utilisateurs" class="aligne-icon return-demande">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -247,7 +249,6 @@
 
         </div>
         <?php endforeach; ?>
-
     </div>
     <?php endif; ?>
 </div>
@@ -261,35 +262,50 @@
 
 <?php if (!$user->calculeAdminRevenuUtilisateur()) :  echo "<h3>L'utilisateur n'as pas de revenu </h3>"?>
 <?php else: ?>
-<div class="cotisation-admin">
-    <div class="display-flex space-between">
-        <!-- <div> <h2 class="underline" onclick="toggleDetailCotisation()"><span
-        class="align-verticaly gap-10px"><ion-icon id="icon-cotisation"
-        name="chevron-down-outline"></ion-icon>Revenu</span></h2> </div> -->
+
+    <div id="bar-chart-container">
+        <canvas id="bar-chart"></canvas>
     </div>
-    <div class="display-flex">
-        <div>
-            <?php $revenuparmois = $user->revenusParMoisUtilisateurAdmin(); ?>
-        </div>
-        <ul class="capitalize">
 
-            <?php foreach($revenuparmois as $mois => $revenu) : ?>
-            <li
-                class="display-flex flex-column space-between align-verticaly revenu-li relative"
-                data-revenu="<?php echo $revenu; ?>">
-                <span class="small revenu-li"><?php echo $revenu*0.93.'€';?></span>
-                <span class="mois-li"><?php echo $user->formaterMoisAnnee($mois);?></span>
-            </li>
-            <?php endforeach; ?>
-
-        </ul>
-
-    </div>
 </div>
+
+</div>
+
+<script>
+    // Données du graphique
+    const revenusProprietaires = <?php echo json_encode($donneesProrieter); ?>;
+
+    const data = {
+        // labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+        datasets: [{
+        label: "Revenus propriétaires" ,
+        data: revenusProprietaires, 
+        backgroundColor: '#1F7A8C',
+        },
+      ],
+    };
+
+    // Configuration du graphique
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true // Démarre l'axe y à zéro
+          }
+        }
+      }
+    };
+
+    // Création du graphique
+    const ctx = document.getElementById('bar-chart').getContext('2d');
+    new Chart(ctx, config);
+  </script>
+
 <?php endif; ?>
-</div>
 
-</div>
 <script src="../../scripts/modifCheck.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -306,16 +322,16 @@ inputVideError.textContent = InputerrorMessage;
 });
 </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    // document.addEventListener("DOMContentLoaded", function () {
     
-        var revenuLiElements = document.querySelectorAll('.revenu-li');
-        revenuLiElements.forEach(function (liElement) {
-            var revenu = parseFloat(liElement.getAttribute('data-revenu'));
-            var hauteur = revenu * 0.07;
-            liElement.style.height = hauteur + 'px';
-        });
+    //     var revenuLiElements = document.querySelectorAll('.revenu-li');
+    //     revenuLiElements.forEach(function (liElement) {
+    //         var revenu = parseFloat(liElement.getAttribute('data-revenu'));
+    //         var hauteur = revenu * 0.07;
+    //         liElement.style.height = hauteur + 'px';
+    //     });
         
-    });
+    // });
     document.addEventListener("DOMContentLoaded", function () {
                 const notificationDivs = document.querySelectorAll(
                     '.notification-absolute-div'

@@ -89,7 +89,6 @@
 <div class="search-appartement-wraper">
     <div class="search-appartement align-verticaly align-horizontaly ">
         <div class="width-100">
-        <h2 class="display-flex align-horizontaly no-mar-pad" style="margin-bottom:30px;">Chercher un appartement</h2>
         <form action="" method="post">
                 <div class="search-appartement-param">
                     <select name="arrondisment" id="arrondisment">

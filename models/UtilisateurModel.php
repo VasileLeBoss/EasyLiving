@@ -159,7 +159,7 @@ class Utilisateur {
             
             $dateArrivee = new DateTime($revenu['dateArrivee']);
             $dateDepart = new DateTime($revenu['dateDepart']);
-            $nombreJours = $dateDepart->diff($dateArrivee)->days + 1;
+            $nombreJours = $dateDepart->diff($dateArrivee)->days ;
 
             
             $revenuTotal += ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
@@ -168,6 +168,36 @@ class Utilisateur {
 
 
     }
+public function revenusParMoisAllUtilisateurAdmin()
+{
+    $AllUtilisateurs = $this->getAllUtilisateurs();
+    $revenusParMoisTotal = []; // Tableau pour stocker les revenus totaux par mois pour tous les utilisateurs
+
+    // Parcourir tous les utilisateurs
+    foreach ($AllUtilisateurs as $utilisateur) {
+        // Récupérer les revenus par mois pour cet utilisateur
+        $revenusUtilisateur = $utilisateur->revenusParMoisUtilisateurAdmin();
+
+        // Ajouter les revenus de cet utilisateur aux revenus totaux par mois
+        foreach ($revenusUtilisateur as $mois => $revenu) {
+            if (isset($revenusParMoisTotal[$mois])) {
+                $revenusParMoisTotal[$mois] += $revenu;
+            } else {
+                $revenusParMoisTotal[$mois] = $revenu;
+            }
+        }
+    }
+
+    // Retourner les revenus totaux par mois pour tous les utilisateurs
+    return $revenusParMoisTotal;
+}
+
+    
+    
+    
+
+
+
     public function revenusParMoisUtilisateurAdmin()
     {
         // Initialiser un tableau pour stocker les revenus par mois
@@ -186,7 +216,7 @@ class Utilisateur {
             // Calculer le revenu pour cet élément
             $dateArrivee = new DateTime($revenu['dateArrivee']);
             $dateDepart = new DateTime($revenu['dateDepart']);
-            $nombreJours = $dateDepart->diff($dateArrivee)->days + 1;
+            $nombreJours = $dateDepart->diff($dateArrivee)->days ;
             $revenuElement = ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
     
             // Ajouter le revenu au mois correspondant dans le tableau
@@ -218,7 +248,7 @@ class Utilisateur {
         // Calculer le revenu pour cet élément
         $dateArrivee = new DateTime($revenu['dateArrivee']);
         $dateDepart = new DateTime($revenu['dateDepart']);
-        $nombreJours = $dateDepart->diff($dateArrivee)->days + 1;
+        $nombreJours = $dateDepart->diff($dateArrivee)->days ;
         $revenuElement = ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
 
         // Ajouter le revenu au mois correspondant dans le tableau
@@ -303,6 +333,20 @@ class Utilisateur {
 
         return false;
     }
+    public function getAllLocataire()
+    {
+        if (Utilisateur::estAdmin()) 
+        {
+            require_once('../../models/ModeleDonnees.php');
+            $monModele = new ModeleDonnees('lecture');
+            $results = $monModele->getAllLocataire();
+        
+        
+            return $results;
+        }
+
+        return false;
+    }
     public function GetAllAppartements()
     {
         if (Utilisateur::estAdmin()) 
@@ -349,7 +393,7 @@ class Utilisateur {
         foreach ($revenuUtilisateur as $revenu) {
             $dateArrivee = new DateTime($revenu['dateArrivee']);
             $dateDepart = new DateTime($revenu['dateDepart']);
-            $nombreJours = $dateDepart->diff($dateArrivee)->days + 1;
+            $nombreJours = $dateDepart->diff($dateArrivee)->days ;
     
             $revenuTotal += ($revenu['prix_loc'] + $revenu['prix_charg']) * $nombreJours;
         }

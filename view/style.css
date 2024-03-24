@@ -141,7 +141,7 @@ select
 }
 .gap-24px
 {
-    gap: 52px;
+    gap: 24px;
 }
 .gap-52px
 {
@@ -2334,6 +2334,18 @@ body.admin
 .admin-dashboard .box:nth-child(5n) {
     grid-column: span 3;
 }
+.box-demandes-all
+{
+    display: grid;
+    grid-template-columns:0.5fr 1fr 1fr 0.5fr 0.5fr 0.5fr 0.5fr;
+    padding-block: 16px;
+    padding-inline: 12px;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--second-color-text);
+    white-space: nowrap;
+    overflow: hidden;   
+}
 .box-demandes-user
 {
     display: grid;
@@ -2363,6 +2375,19 @@ a:hover > .box-user
    color: var(--text-color-white);
    background-color: var(--second-color);
 }
+.box-locataire
+{
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.2fr;
+    padding-block: 16px;
+    padding-inline: 12px;
+    justify-content: space-between;
+    gap: 12px;
+    transition: var(--transition-time);
+    border-top: 1px solid var(--second-color-text);
+    white-space: nowrap;
+    overflow: hidden;  
+}
 .box-user
 {
     display: grid;
@@ -2376,7 +2401,7 @@ a:hover > .box-user
     white-space: nowrap;
     overflow: hidden;
 }
-.box-user > div,.box-demandes > div,.box-demandes-user > div {
+.box-user > div,.box-demandes > div,.box-demandes-user > div ,.box-locataire > div {
     flex: 1;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -2388,6 +2413,16 @@ a:hover > .box-user
     right: 32px;
     color: var(--green);
     font-size: 3rem;
+}
+.admin-revenu
+{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 54px;
+}
+.admin-revenu .box:nth-child(1),.admin-revenu :nth-child(3) {
+    grid-column: span 3;
+    
 }
   @keyframes rotate {
     from {
@@ -2402,6 +2437,15 @@ a:hover > .box-user
     html {
         font-size: 12px;
 
+    }
+    .admin-revenu
+    {
+        grid-template-columns: repeat(1,1fr);
+        gap: 12px;
+    }
+    .admin-revenu .box:nth-child(1),.admin-revenu :nth-child(3) {
+        grid-column: span 1;
+        
     }
     .box-compte
     {
@@ -2608,7 +2652,10 @@ flex-direction: column;
         grid-template-columns: 1fr ; 
         gap: 20px;
     }
-    
+    .font-size-72px
+    {
+        font-size:42px
+    }
     .progress-bar-conteiner
     {
         display: flex;

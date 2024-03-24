@@ -42,10 +42,8 @@
                 </a>
             </form>
         <?php endforeach; ?>
-
-
-
     </div>
+    
     <?php foreach($AllUtilisateurs as $utilisateur): ?>
         <form id="form_<?php echo $utilisateur->getId(); ?>" action="" method="get">
                 <input type="hidden" name="view" value="utilisateurs">

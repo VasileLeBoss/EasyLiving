@@ -171,7 +171,16 @@ include('../controls/connected.php');
         <?php endif; ?>
     </div>
 
-<?php if($appartement->getNombreLocataireAppartementById() > 0 ): ?>
+
+
+<?php if( !empty($appartements) ): ?>
+    <?php
+        $nb = 0;
+        foreach ($appartements as $appartement) {
+            $nb = $nb + $appartement->getNombreLocataireAppartementById();
+        }
+    ?>
+    <?php if(  $nb > 0 ): ?>
 <div class="cotisation">
     <div class="display-flex space-between">
         <div>
@@ -200,6 +209,7 @@ include('../controls/connected.php');
 
     </div>
 </div>
+<?php endif; ?>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

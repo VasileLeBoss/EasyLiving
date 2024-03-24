@@ -36,7 +36,7 @@ include('../../controls/check_admin.php');
     <li>
         
         <a href="index.php?view=annonces">
-            <h3><span class="aligne-icon"><ion-icon name="business-outline"></ion-icon><span class="user">Annonces</span></span></h3>
+            <h3><span class="aligne-icon"><ion-icon name="albums-outline"></ion-icon><span class="user">Annonces</span></span></h3>
         </a>
     </li>
     <li>
@@ -47,11 +47,11 @@ include('../../controls/check_admin.php');
     </div>
     <hr>
         <div class="display-flex flex-column gap-10px">
-        <li>
+        <!-- <li>
             <a href="index.php?view=demandeurs">
             <h3><span class="aligne-icon"><ion-icon name="paper-plane-outline"></ion-icon><span class="user">Demandeurs</span></span></h3>
         </a>
-        </li>
+        </li> -->
         <li>
             <a href="index.php?view=demandes">
             <h3><span class="aligne-icon"><ion-icon name="folder-open-outline"></ion-icon><span class="user">Demandes</span></span></h3>
@@ -62,7 +62,7 @@ include('../../controls/check_admin.php');
     <li>
         <a href="index.php?view=revenue">
             <h3>
-                <span class="aligne-icon"><ion-icon name="cash-outline"></ion-icon><span class="user">Revenue</span></span>
+                <span class="aligne-icon"><ion-icon name="cash-outline"></ion-icon><span class="user">Revenu</span></span>
             </h3>
         </a>
     </li>

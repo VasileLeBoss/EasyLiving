@@ -49,7 +49,7 @@ class ModeleDonnees
 	{
 		try {
 			// Étendre la requête pour inclure toutes les informations
-			$requete = "INSERT INTO utilisateur (email, mdp, nom, prenom,  adresse, tel, code_ville) 
+			$requete = "INSERT INTO utilisateur (email, mdp, nom, prenom,  adresse, tel, code_ville,role) 
 						VALUES (:email, :mdp, :nom, :prenom, :adresse, :tel,  :code_ville, :role)";
 			
 			$ordre = $this->monPDOstatique->prepare($requete);
@@ -72,6 +72,8 @@ class ModeleDonnees
 		}
 	}
 	
+
+
 	public function verifierLoginMdP($email, $mdp) {
 		try {
 			$requete = "SELECT id_utilisateur, email, mdp, nom, prenom, adresse, tel, code_ville,role FROM utilisateur WHERE email = :email";
@@ -103,12 +105,26 @@ class ModeleDonnees
 
             $resultat = $ordre->fetch(PDO::FETCH_ASSOC);
 
-            return $resultat; // Renvoie les informations de l'utilisateur ou false s'il n'est pas trouvé
+            return $resultat; 
         } catch (PDOException $e) {
             
             die("Erreur lors de la récupération de l'utilisateur par e-mail : " . $e->getMessage());
         }
     }
+	public function ArchiverUtilisateurbyID($id) {
+		try {
+			$requete = "DELETE FROM utilisateur WHERE id_utilisateur = :id";
+			$ordre = $this->monPDOstatique->prepare($requete);
+			$ordre->bindParam(':id', $id, PDO::PARAM_INT); 
+			$ordre->execute();
+			
+		} catch (PDOException $e) {
+
+			die("Erreur lors de la suppression de l'utilisateur : " . $e->getMessage());
+		}
+	}
+	
+	
 	public function getUtilisateurByID($id) {
         try {
             $requete = "SELECT id_utilisateur, email, nom, prenom, adresse, tel, code_ville,role FROM utilisateur WHERE id_utilisateur = :id";

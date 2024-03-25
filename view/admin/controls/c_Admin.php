@@ -37,8 +37,7 @@ if (Utilisateur::estAdmin()) {
             
             if (empty($newEmail) || empty($newNom) || empty($newPrenom) || empty($newTel) || empty($newAdresse) || empty($newCodeVille)) {
                 $_SESSION['input-vide_error'] = "Veuillez remplir tous les champs du formulaire.";
-                // header("Location: ../view/v_compte-modif.php");
-                // exit;
+
             }
 
             require_once('../../models/ModeleDonnees.php');
@@ -76,6 +75,15 @@ if (Utilisateur::estAdmin()) {
             include('templates/v_utilisateur-details.php'); 
             exit;
 
+        }
+        if (isset($_POST['archiver'])) {
+            
+            require_once('../../models/ModeleDonnees.php');
+            $modele = new ModeleDonnees('ecriture');
+            $results = $modele->ArchiverUtilisateurbyID($_POST['archiver']);
+
+            echo '<script>window.location.href = "?view=utilisateurs";</script>';
+            exit;
         }
     }
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {

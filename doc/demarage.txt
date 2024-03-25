@@ -51,5 +51,27 @@ BEGIN
 END //
 
 DELIMITER ;
+
 SET GLOBAL event_scheduler = ON;
+
+DELIMITER //
+
+CREATE TRIGGER before_delete_utilisateur
+BEFORE DELETE ON utilisateur
+FOR EACH ROW
+BEGIN
+   DELETE FROM demandes WHERE id_demandeur = OLD.id_utilisateur OR id_proprieter = OLD.id_utilisateur;
+   DELETE FROM appartement_temp WHERE id_utilisateur = OLD.id_utilisateur;
+	DELETE FROM appartements WHERE id_utilisateur = OLD.id_utilisateur;
+
+    
+    INSERT INTO archive_utilisateur (id_utilisateur, email, mdp, nom, prenom,  adresse, tel, code_ville,role) 
+    VALUES (OLD.id_utilisateur, OLD.email, OLD.mdp, OLD.nom, OLD.prenom,  OLD.adresse, OLD.tel, OLD.code_ville,OLD.role);
+    
+    
+END
+//
+
+DELIMITER ;
+
 

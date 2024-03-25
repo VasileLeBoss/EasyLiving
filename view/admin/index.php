@@ -2,7 +2,7 @@
 include('header-admin.php');
 ?>
 
-<body class="admin">
+<body class="admin" id="body">
     <div class="admin-conteiner">
         <?php include('controls/c_Admin.php');?>
         <h1 style="margin-top:0;"><span class="aligne-icon gap-10px"><ion-icon name="grid-outline"></ion-icon>Tableau de bord</span></h1>

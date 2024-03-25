@@ -808,7 +808,10 @@ justify-content: center;
     box-sizing: border-box;
 }
 
-
+.hover-pointer:hover
+{
+    cursor: pointer;
+}
 
 .full-width-white-header-flex img
 {
@@ -914,6 +917,49 @@ input[type='number']{
     box-sizing: border-box;
     z-index: 1000 !important;
     padding-inline: var(--header-padding-inline);
+}
+.archive-alert
+{
+ 
+display: flex;
+ position: absolute;
+ top: 0;
+ left: 264px;
+ z-index: 99;
+ width: calc(100vw - 264px);
+ height: 100vh;
+ backdrop-filter: blur(12px);
+
+}
+.archive-alert button.non,.archive-alert button.archver
+{
+    border: none;
+    border: 1px solid var(--text-color-black);
+    background-color: transparent;
+    transition: var(--transition-time);
+    border-radius: 6px;
+    color: var(--text-color-black);
+    padding: 8px;
+}
+.archive-alert button.non:hover
+{
+    background-color: var(--second-color) !important;
+    border: none;
+    color: var(--text-color-black);
+}
+.archive-alert button.archver:hover
+{
+    background-color: var(--red-erreur) !important;
+    border: none;
+    color: var(--text-color-black);
+}
+.archive-alert .alert
+{
+    padding: 30px;
+
+    background-color: var(--main-backgraund-color);
+    border: 1px solid var(--text-color-black);
+    border-radius: 6px;
 }
 .overflow-auto
 {
@@ -1186,7 +1232,11 @@ i svg path{
 input[type="file"] {
     display: none;
 }
-
+body.overflow-hidden {
+    overflow: hidden;
+    width: calc(100% - 264px);
+    height: 100vh;
+}
 .image-selectionnee {
     display: none; /* Masquer initialement */
 }
@@ -2485,14 +2535,22 @@ a:hover > .box-user
 
     height: 100vh;
 }
-.header-admin-panel ul
-{
-    padding-top: 12px;
-}
+
 body.admin
 {
     margin-left: 41px;
     width: calc(100% - 41px);
+}
+body.overflow-hidden {
+    overflow: hidden;
+    height: 100vh;
+    width: calc(100% - 41px);
+}
+.archive-alert
+{
+ 
+ left: 41px;
+ width: calc(100% - 41px);
 }
 .header-admin-panel ul li
 {

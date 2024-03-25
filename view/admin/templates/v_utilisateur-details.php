@@ -1,13 +1,35 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<h1 class="fit-content relative aligne-icon" style="margin-top:0;">
-    <a href="?view=utilisateurs" class="aligne-icon return-demande">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-    </a>
-    <span class="aligne-icon gap-10px capitalize">
-        <ion-icon name="people-circle-outline"></ion-icon><?php echo $user->getNomComplet() ;?>
-    </span>
-</h1>
+<div class="display-flex space-between">
+    <h1 class="fit-content relative aligne-icon" style="margin-top:0;">
+        <a href="?view=utilisateurs" class="aligne-icon return-demande">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+        </a>
+        <span class="aligne-icon gap-10px capitalize">
+            <ion-icon name="people-circle-outline"></ion-icon><?php echo $user->getNomComplet() ;?>
+        </span>
+    </h1>
+
+    <h3 class="no-mar-pad red hover-pointer" onclick="afficherDiv()">
+        <span class="aligne-icon gap-5px"><span class="user">Archiver</span><ion-icon class="font-size-24px" name="archive-outline"></ion-icon></span>
+    </h3>
+</div>
+<div class="archive-alert " id="archiver-alert" style="display:none;">
+    <div class="height-100 display-flex align-verticaly align-horizontaly">
+        <div class="alert">
+            <div class="display-flex space-between"><h1 class="no-mar-pad"><span class="red">Alert</span></h1><span id="close" class="hover-pointer" onclick="hiddeDiv()" ><ion-icon name="close-outline"></ion-icon></span></div>
+            <h3>Voulez-vous vraiment archiver cet utilisateur ?</h3>
+            <div class="display-grid grid-template-columns-2 gap-24px">
+
+                <button onclick="hiddeDiv()" class="width-100 non hover-pointer">Non</button>
+                <form  action="" method="post">
+                    <input type="hidden" name="archiver" value="<?php echo $user->getId();?>">
+                    <button  class="width-100 archver hover-pointer">Archiver</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="admin-utilisateur-details relative">
     <div class="box">
@@ -260,8 +282,8 @@
             </h2>
     </div>
 
-<?php if (!$user->calculeAdminRevenuUtilisateur()) :  echo "<h3>L'utilisateur n'as pas de revenu </h3>"?>
-<?php else: ?>
+    <?php if (!$user->calculeAdminRevenuUtilisateur()) :  echo "<h3>L'utilisateur n'as pas de revenu </h3>"?>
+    <?php else: ?>
 
     <div id="bar-chart-container">
         <canvas id="bar-chart"></canvas>
@@ -270,6 +292,9 @@
 </div>
 
 </div>
+
+
+
 
 <script>
     // Données du graphique
@@ -306,7 +331,15 @@
 
 <?php endif; ?>
 
+
+
+
 <script src="../../scripts/modifCheck.js"></script>
+
+
+
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 var errorMessage = "<?php echo isset($_SESSION['email_error']) ? $_SESSION['email_error'] : ''; ?>";
@@ -321,6 +354,7 @@ var inputVideError = document.getElementById('input-vide_error');
 inputVideError.textContent = InputerrorMessage;
 });
 </script>
+
 <script>
     // document.addEventListener("DOMContentLoaded", function () {
     
@@ -345,3 +379,20 @@ inputVideError.textContent = InputerrorMessage;
                 });
             });
 </script>
+
+<script>
+    function afficherDiv() {
+    document.getElementById("archiver-alert").style.display = "block";
+    document.body.classList.add("overflow-hidden"); 
+
+
+}
+function hiddeDiv()
+        {
+            document.getElementById("archiver-alert").style.display = "none";
+            document.body.classList.remove("overflow-hidden"); 
+
+        }
+</script>
+
+        

@@ -1,18 +1,18 @@
 
-<div class="box display-flex flex-column ">
 
-    <h2 class="no-mar-pad">
+    <h1 class="fit-content " style="margin-top:0;">
+    <a href="?view=annonces" class="text-color-black">
         <span class="aligne-icon gap-10px">
-            <ion-icon name="albums-outline"></ion-icon>Annonces</span>
-    </h2>
-    </div>
+        <ion-icon name="albums-outline"></ion-icon>Annonces</a>
+    </span>
+</h1>
     <?php if (empty($AllAppartements)) :  echo "<h3>Aucune annonce disponible </h3>";?>
 
 <?php else: ?>
     <div class="conteiner-grid-accueil-annonces">
 
         <?php foreach ($AllAppartements as $appartement) : ?>
-        <a href="#" onclick="submitForm(<?php echo $appartement->getNumappart() ?>)">
+        <!-- <a href="#" onclick="submitForm(<?php echo $appartement->getNumappart() ?>)"> -->
             <div class="box-grid-accueil-annonce">
                 <div class="img-annonce align-horizontaly">
                     <img src="../../src/<?php echo $appartement->getTypappart() . '.png'; ?>" alt="">
@@ -43,7 +43,7 @@
                 </form>
 
             </div>
-        </a>
+        <!-- </a> -->
         <?php endforeach; ?>
 
     </div>

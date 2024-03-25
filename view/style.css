@@ -944,21 +944,22 @@ display: flex;
 .archive-alert button.non:hover
 {
     background-color: var(--second-color) !important;
+    border-color: transparent;
     border: none;
-    color: var(--text-color-black);
+    color: var(--text-color-white);
 }
 .archive-alert button.archver:hover
 {
+    border-color: transparent;
     background-color: var(--red-erreur) !important;
     border: none;
-    color: var(--text-color-black);
+    color: var(--text-color-white);
 }
 .archive-alert .alert
 {
     padding: 30px;
-
-    background-color: var(--main-backgraund-color);
-    border: 1px solid var(--text-color-black);
+    border: 1px solid var(--second-color-text);
+    background-color: var(--second-backgraund-color);
     border-radius: 6px;
 }
 .overflow-auto

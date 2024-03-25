@@ -38,9 +38,21 @@ include('../controls/connected.php');
                 </span>
             </div>
         </div>
+        <div class="box-compte-informations">
+            <div class="box-compte-information " >
+                <span><ion-icon name="alert-circle-outline"></ion-icon></span>
+                <span >
+                Si vous avez des réservations en cours, aucun remboursement ne sera effectué.
+                </span>
+            </div>
+        </div>
         <div class="box-compte-informations red">
             <div class="box-compte-information align-verticaly ali" >
+               <form action="../controls/c_Utilisateur.php" method="post">
+                <input type="hidden" name="modif" value="desactiver-compte">
+                <input type="hidden" name="id" value="<?php $_SESSION['utilisateur']->getId();?>">
                 <button type="submit" id="delete" >Désactiver le compte</button>
+               </form>
             </div>
         </div>
     </div>

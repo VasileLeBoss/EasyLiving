@@ -79,7 +79,7 @@ include('header-admin.php');
                 <?php endfor; ?>
                 <?php if(count($AllDemandes)>8): ?>
                 <div class="display-flex end">
-                    <a href="">
+                    <a href="index.php?view=demandes">
                     <button class="fit-content">Afficher détails</button>
                     </a>
                 </div>

@@ -15,7 +15,7 @@
     </h3>
 </div>
 <div class="archive-alert " id="archiver-alert" style="display:none;">
-    <div class="height-100 display-flex align-verticaly align-horizontaly">
+    <div class="height-100 display-flex align-verticaly align-horizontaly" >
         <div class="alert">
             <div class="display-flex space-between"><h1 class="no-mar-pad"><span class="red">Alert</span></h1><span id="close" class="hover-pointer" onclick="hiddeDiv()" ><ion-icon name="close-outline"></ion-icon></span></div>
             <h3>Voulez-vous vraiment archiver cet utilisateur ?</h3>

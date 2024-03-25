@@ -96,6 +96,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit();
                 }
             break;
+            case 'desactiver-compte':
+               
+                $monModele = new ModeleDonnees('ecriture');
+                $results = $monModele->ArchiverUtilisateurbyID($_SESSION['utilisateur']->getId()); 
+
+                header("Location: deconnexion.php");
+                exit;
+                break;
             
 
            
